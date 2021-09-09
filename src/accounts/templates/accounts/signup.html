@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+    {% block title %}
+        <TITLE>Inscription</TITLE>
+    {% endblock %}
+
+    {% block content %}
+        <form method="POST" class="signup">
+            <h1>Inscrivez-vous</h1>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <input type="submit" value="Valider" class="btn btn-submit">
+        </form>
+    {% endblock %}

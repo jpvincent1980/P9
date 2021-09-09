@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+    {% block title %}
+        <TITLE>LITReview</TITLE>
+    {% endblock %}
+
+    {% block header %}
+        <header>
+            <h1>LITReview</h1>
+            <nav>
+                    <a href="">Flux</a>
+                    <a href="">Posts</a>
+                    <a href="">Abonnements</a>
+                    <a href="">Se déconnecter</a>
+
+            </nav>
+        </header>
+    {% endblock %}
+
+    {% block content %}
+
+        {% if request.user.is_authenticated %}
+            <p>Bienvenue à toi !</p>
+        {% else %}
+            <div class="login">
+                <div>
+                    <h2>Inscrivez-vous maintenant</h2>
+                    <br>
+                    <button class="btn btn-submit">S'inscrire</button>
+                </div>
+                <div>
+                    <img src="{% static 'img/logo.png' %}" alt="Logo du site">
+                </div>
+                <div>
+                    <h2>Connectez-vous</h2>
+                    <form method="POST" class="signup">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>
+                        <input type="submit" value="Se connecter" class="btn btn-submit">
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+
+    {% endblock %}
