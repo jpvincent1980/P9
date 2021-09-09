@@ -28,7 +28,9 @@
                 <div>
                     <h2>Inscrivez-vous maintenant</h2>
                     <br>
-                    <button class="btn btn-submit">S'inscrire</button>
+                    <a href="{% url 'accounts:signup' %}">
+                        <button class="btn btn-submit">S'inscrire</button>
+                    </a>
                 </div>
                 <div>
                     <img src="{% static 'img/logo.png' %}" alt="Logo du site">
@@ -38,6 +40,10 @@
                     <form method="POST" class="signup">
                         {% csrf_token %}
                         {{ form.as_p }}
+                        <img src="{% static 'img/show-icon.jpg' %}"
+                         alt="Voir le mot de passe"
+                         width="50px"
+                         onclick="ShowPassword('id_password')" />
                         <br>
                         <input type="submit" value="Se connecter" class="btn btn-submit">
                     </form>

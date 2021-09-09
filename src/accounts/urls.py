@@ -2,7 +2,7 @@ from django.urls import path
 from accounts.views import SignupView, index, account_created
 
 # Création d'un espace de noms
-app_name = 'accounts"'
+app_name = 'accounts'
 
 urlpatterns = [
     path('', index, name="index"),

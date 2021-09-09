@@ -1,23 +1,28 @@
+from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView, FormView
-from accounts.forms import SignupForm
-from LITReview import settings
+from django.views.generic import CreateView
+from accounts.forms import SignupForm, LoginForm
+from accounts.models import CustomUser
 
 
 # Create your views here.
-class SignupView(FormView):
+class SignupView(CreateView):
+    model = CustomUser
     form_class = SignupForm
-    context_object_name = "user"
+    context_object_name = "user_form"
     template_name = "accounts/signup.html"
-    fields = ["username", "password"]
     success_url = "../account-created/"
 
-    # def form_valid(self, form):
-    #     return super().form_valid(form)
+    def post(self, request, *args, **kwargs):
+        if request.method == "POST":
+            if request.POST["password"] != request.POST["password_confirm"]:
+                return HttpResponse("Ca matche pas ...")
+            else:
+                return HttpResponse("Ca matche !!!")
 
 
 def index(request):
-    form = SignupForm
+    form = LoginForm
     context = {"form": form}
     return render(request, "accounts/index.html", context)
 

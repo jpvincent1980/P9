@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 
     {% block title %}
@@ -10,6 +11,10 @@
             <h1>Inscrivez-vous</h1>
             {% csrf_token %}
             {{ form.as_p }}
+            <img src="{% static 'img/show-icon.jpg' %}"
+                 alt="Voir le mot de passe"
+                 width="50px"
+                 onclick="ShowPassword('id_password1')" />
             <br>
             <input type="submit" value="Valider" class="btn btn-submit">
         </form>
