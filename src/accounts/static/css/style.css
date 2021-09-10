@@ -36,8 +36,13 @@ header  a, nav  a, p a {
     text-align: center;
 }
 
-.login h2, .signup h2 {
+.login h2, .signup h2, .search h2,h3 {
     margin-bottom: 1rem;
+}
+
+.search {
+    margin: 1rem auto;
+    width: 50%;
 }
 
 .signup {
@@ -48,6 +53,11 @@ header  a, nav  a, p a {
 
 .signup p {
     margin: 1rem auto;
+}
+
+#id_user_search {
+    min-width: 200px;
+    border-radius: .25rem;
 }
 
 .btn {

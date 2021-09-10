@@ -13,9 +13,32 @@
         <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
     </p>
 {% else %}
-    <p>
-        <h2>Bienvenue sur la page de gestions de vos abonnements.</h2>
-    </p>
+            <section class="search">
+                <h2>Bienvenue sur votre page d'abonnements {{ user.username }}.</h2>
+            </section>
+            <section class="search">
+                <h2>Suivre d'autres utilisateurs</h2>
+                <form method="POST">
+                    <input type="text" placeholder="Tapez le nom de l'utilisateur" id="id_user_search">
+                    <input type="submit" value="S'inscrire" class="btn btn-submit">
+                </form>
+            </section>
+            <section class="search">
+                <h2>Abonnements</h2>
+                {% for user in followed_users %}
+                    <h3>{{ user }}</h3>
+                {% empty %}
+                    <h3>Vous ne suivez aucun utilisateur actuellement.</h3>
+                {% endfor %}
+            </section>
+            <section class="search">
+                <h2>Abonnés</h2>
+                {% for follower in followers %}
+                    <h3>{{ follower }}</h3>
+                {% empty %}
+                    <h3>Vous n'avez aucun abonné actuellement.</h3>
+                {% endfor %}
+            </section>
 {% endif %}
 
 {% endblock %}

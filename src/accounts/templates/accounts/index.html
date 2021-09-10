@@ -22,9 +22,9 @@
                 <div>
                     <img src="{% static 'img/logo.png' %}" alt="Logo du site">
                 </div>
-                <div>
+                <div class="signup">
                     <h2>Connectez-vous</h2>
-                    <form method="POST" class="signup">
+                    <form method="POST">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <img src="{% static 'img/show-icon.jpg' %}"
