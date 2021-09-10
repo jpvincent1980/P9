@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <TITLE>Abonnements</TITLE>
+{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+    <p>
+        <h2>Merci de vous identifier en page d'accueil afin d'avoir accès à vos abonnements.</h2>
+    </p>
+    <p>
+        <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+    </p>
+{% else %}
+    <p>
+        <h2>Bienvenue sur la page de gestions de vos abonnements.</h2>
+    </p>
+{% endif %}
+
+{% endblock %}
