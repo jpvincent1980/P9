@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p class="signup-confirmation">Merci de vous êtes inscrit sur LITReview !</p>
+    <p class="signup-confirmation">Merci de vous êtes inscrit sur LITReview !
+        <br>
+        <a href="{% url 'accounts:index' %}">
+            <button class="btn btn-submit">Revenir à l'accueil</button>
+        </a>
+    </p>
 {% endblock %}

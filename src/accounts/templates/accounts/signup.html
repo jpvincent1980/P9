@@ -7,15 +7,20 @@
     {% endblock %}
 
     {% block content %}
+    {% if user.is_authenticated %}
+        <p><h2>Vous êtes déjà inscrit sur notre site.</h2></p>
+        <p>
+            <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+        </p>
+    {% else %}
         <form method="POST" class="signup">
-            <h1>Inscrivez-vous</h1>
+            <h2>Inscrivez-vous</h2>
             {% csrf_token %}
             {{ form.as_p }}
-            <img src="{% static 'img/show-icon.jpg' %}"
-                 alt="Voir le mot de passe"
-                 width="50px"
-                 onclick="ShowPassword('id_password1')" />
-            <br>
-            <input type="submit" value="Valider" class="btn btn-submit">
+            <p>
+                <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+                <input type="submit" value="S'inscrire" class="btn btn-submit">
+            </p>
         </form>
+    {% endif %}
     {% endblock %}

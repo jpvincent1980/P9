@@ -19,33 +19,34 @@ html, body {
 }
 
 header {
-margin-top: 1rem;
     display: flex;
     align-items: baseline;
     justify-content: space-around;
 }
 
-header  a, nav  a {
+header  a, nav  a, p a {
     text-decoration: none;
     padding: 1rem;
 }
 
 .login {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     text-align: center;
 }
 
-.login h2 {
+.login h2, .signup h2 {
     margin-bottom: 1rem;
 }
 
 .signup {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.signup > h1,p,ul {
+.signup p {
     margin: 1rem auto;
 }
 
@@ -65,7 +66,7 @@ header  a, nav  a {
 }
 
 .signup-confirmation {
-    font-size: 5rem;
+    font-size: 3rem;
     text-align: center;
 }
 
@@ -74,10 +75,20 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
+main p {
+    margin: auto;
+}
+
+/*
+.signup p::after {
+    content: url('../img/show-icon.jpg');
+}
+*/
+
 footer {
-    margin: 1rem 0;
     display: flex;
     align-items: baseline;
     justify-content: space-around;

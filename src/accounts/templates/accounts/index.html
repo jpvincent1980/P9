@@ -6,23 +6,10 @@
         <TITLE>LITReview</TITLE>
     {% endblock %}
 
-    {% block header %}
-        <header>
-            <h1>LITReview</h1>
-            <nav>
-                    <a href="">Flux</a>
-                    <a href="">Posts</a>
-                    <a href="">Abonnements</a>
-                    <a href="">Se déconnecter</a>
-
-            </nav>
-        </header>
-    {% endblock %}
-
     {% block content %}
 
         {% if request.user.is_authenticated %}
-            <p>Bienvenue à toi !</p>
+                <h2>Bienvenue {{ user.username }} !</h2>
         {% else %}
             <div class="login">
                 <div>
@@ -44,8 +31,7 @@
                          alt="Voir le mot de passe"
                          width="50px"
                          onclick="ShowPassword('id_password')" />
-                        <br>
-                        <input type="submit" value="Se connecter" class="btn btn-submit">
+                        <p><input type="submit" value="Se connecter" class="btn btn-submit"></p>
                     </form>
                 </div>
             </div>

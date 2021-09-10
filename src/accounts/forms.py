@@ -1,6 +1,4 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, forms
-from django.forms import PasswordInput
-
 from accounts.models import CustomUser
 
 
