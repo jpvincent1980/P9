@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
-from accounts.models import CustomUser
-from reviews.models import UserFollows
+from accounts.models import CustomUser, UserFollows
 
 
 # Create your views here.

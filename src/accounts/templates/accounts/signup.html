@@ -16,7 +16,15 @@
         <form method="POST" class="signup">
             <h2>Inscrivez-vous</h2>
             {% csrf_token %}
-            {{ form.as_p }}
+            {% for field in form %}
+                {% if forloop.counter == 2 %}
+                    <p>{{ field.label_tag }} {{ field }}
+                    <span class="show-password" onclick="ShowPassword('id_password1')">👁</span>
+                    </p>
+                {% else %}
+                    <p>{{ field.label_tag }} {{ field }}
+                {% endif %}
+            {% endfor %}
             <p>
                 <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
                 <input type="submit" value="S'inscrire" class="btn btn-submit">

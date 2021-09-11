@@ -24,7 +24,14 @@ header {
     justify-content: space-around;
 }
 
+/*
 header  a, nav  a, p a {
+    text-decoration: none;
+    padding: 1rem;
+}
+*/
+
+ a {
     text-decoration: none;
     padding: 1rem;
 }
@@ -36,13 +43,23 @@ header  a, nav  a, p a {
     text-align: center;
 }
 
-.login h2, .signup h2, .search h2,h3 {
+.login h2, .signup h2, .search h2 {
     margin-bottom: 1rem;
 }
 
 .search {
     margin: 1rem auto;
     width: 50%;
+}
+
+.search-list > div {
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem;
+}
+
+.search-list > div:nth-child(even) {
+    background-color: rgba(255,255,255,.5);
 }
 
 .signup {
@@ -53,6 +70,12 @@ header  a, nav  a, p a {
 
 .signup p {
     margin: 1rem auto;
+}
+
+.show-password {
+    font-size: 30px;
+    cursor: pointer;
+    vertical-align: sub;
 }
 
 #id_user_search {
@@ -92,11 +115,10 @@ main p {
     margin: auto;
 }
 
-/*
-.signup p::after {
-    content: url('../img/show-icon.jpg');
+#id_password::after {
+    content: "Test";
+    display: inline-block;
 }
-*/
 
 footer {
     display: flex;

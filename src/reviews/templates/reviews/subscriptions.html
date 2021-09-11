@@ -23,20 +23,29 @@
                     <input type="submit" value="S'inscrire" class="btn btn-submit">
                 </form>
             </section>
-            <section class="search">
+            <section class="search search-list">
                 <h2>Abonnements</h2>
                 {% for user in followed_users %}
-                    <h3>{{ user }}</h3>
+                    <div>
+                        <h3>{{ user }}</h3>
+                        <span><a href="#">Se désabonner</a></span>
+                    </div>
                 {% empty %}
+                <div>
                     <h3>Vous ne suivez aucun utilisateur actuellement.</h3>
+                </div>
                 {% endfor %}
             </section>
-            <section class="search">
+            <section class="search search-list">
                 <h2>Abonnés</h2>
                 {% for follower in followers %}
-                    <h3>{{ follower }}</h3>
+                    <div>
+                        <h3>{{ follower }}</h3>
+                    </div>
                 {% empty %}
-                    <h3>Vous n'avez aucun abonné actuellement.</h3>
+                    <div>
+                        <h3>Vous n'avez aucun abonné actuellement.</h3>
+                    </div>
                 {% endfor %}
             </section>
 {% endif %}

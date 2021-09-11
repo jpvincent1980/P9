@@ -26,11 +26,15 @@
                     <h2>Connectez-vous</h2>
                     <form method="POST">
                         {% csrf_token %}
-                        {{ form.as_p }}
-                        <img src="{% static 'img/show-icon.jpg' %}"
-                         alt="Voir le mot de passe"
-                         width="50px"
-                         onclick="ShowPassword('id_password')" />
+                        {% for field in form %}
+                            {% if forloop.counter == 2 %}
+                                <p>{{ field.label_tag }} {{ field }}
+                                <span class="show-password" onclick="ShowPassword('id_password')">👁</span>
+                                </p>
+                            {% else %}
+                                <p>{{ field.label_tag }} {{ field }}
+                            {% endif %}
+                        {% endfor %}
                         <p><input type="submit" value="Se connecter" class="btn btn-submit"></p>
                     </form>
                 </div>
