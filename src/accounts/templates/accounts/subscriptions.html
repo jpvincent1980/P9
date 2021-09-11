@@ -19,10 +19,24 @@
             <section class="main-section main-section-list">
                 <h2>Suivre d'autres utilisateurs</h2>
                 <form method="POST">
-                    <input type="text" placeholder="Tapez le nom de l'utilisateur" id="id_user_search">
-                    <input type="submit" value="S'inscrire" class="btn btn-submit">
+                    {% csrf_token %}
+                    <input type="text" name="user_search" placeholder="Tapez le nom de l'utilisateur" id="id_user_search">
+                    <input type="submit" value="Chercher" class="btn btn-submit">
                 </form>
             </section>
+            {% if result %}
+            <section class="main-section main-section-list shadow-box"">
+                {% for user in result %}
+                <h2>Résultats</h2>
+                <div>
+                    <h3>{{ user }}</h3>
+                    {% if result_type != "str" %}
+                    <a href="{% url 'accounts:subscribe' user_id=user.id %}" method="POST"><button class="btn btn-submit">S'abonner</button></a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </section>
+            {% endif %}
             <section class="main-section main-section-list shadow-box">
                 <h2>Abonnements</h2>
                 {% for user in followed_users %}

@@ -64,7 +64,28 @@ def subscriptions_view(request):
     followed_users = [CustomUser.objects.get(pk=user_id) for user_id in followed_users]
     context = {"followers": followers,
                "followed_users": followed_users}
+    if request.method == "POST" and (request.POST["user_search"] is not None or request.POST["user_search"] != ""):
+        searched_user = CustomUser.objects.filter(username=request.POST["user_search"])
+        if len(searched_user) > 0:
+            context = {"followers": followers,
+                       "followed_users": followed_users,
+                       "result": searched_user,
+                       "result_type": "QuerySet"}
+        else:
+            message = "Aucun utilisateur " + \
+                      request.POST["user_search"] + \
+                      " n'a été trouvé."
+            context = {"followers": followers,
+                       "followed_users": followed_users,
+                       "result": [message],
+                       "result_type": "str"}
     return render(request, "accounts/subscriptions.html", context)
+
+
+def subscribe_view(request, user_id):
+    subscription = UserFollows.objects.create(followed_user_id=user_id, user_id=request.user.id)
+    subscription.save()
+    return subscriptions_view(request)
 
 
 def unsubscribe_view(request, user_id):
