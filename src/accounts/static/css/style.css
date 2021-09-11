@@ -36,6 +36,10 @@ header  a, nav  a, p a {
     padding: 1rem;
 }
 
+a:visited {
+    color: black;
+}
+
 .login {
     width: 100%;
     display: flex;
@@ -53,7 +57,7 @@ header  a, nav  a, p a {
     width: 50%;
 }
 
-.main-section-list {
+.shadow-box {
     border: 0;
     border-radius: .3rem;
     padding: 1rem;

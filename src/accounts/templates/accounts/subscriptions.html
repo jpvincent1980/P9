@@ -23,12 +23,12 @@
                     <input type="submit" value="S'inscrire" class="btn btn-submit">
                 </form>
             </section>
-            <section class="main-section main-section-list">
+            <section class="main-section main-section-list shadow-box">
                 <h2>Abonnements</h2>
                 {% for user in followed_users %}
                     <div>
                         <h3>{{ user }}</h3>
-                        <a href="#"><button class="btn btn-delete">Se désabonner</button></a>
+                        <a href="{% url 'accounts:unsubscribe' user_id=user.id %}" method="POST"><button class="btn btn-delete">Se désabonner</button></a>
                     </div>
                 {% empty %}
                 <div>
@@ -36,7 +36,7 @@
                 </div>
                 {% endfor %}
             </section>
-            <section class="main-section main-section-list">
+            <section class="main-section main-section-list shadow-box">
                 <h2>Abonnés</h2>
                 {% for follower in followers %}
                     <div>
