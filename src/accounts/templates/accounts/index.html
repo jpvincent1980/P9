@@ -9,7 +9,20 @@
     {% block content %}
 
         {% if request.user.is_authenticated %}
+        <section class="main-section">
                 <h2>Bienvenue {{ user.username }} !</h2>
+        </section>
+        <section class="main-section">
+            <p>
+                <button class="btn btn-submit">Demander une critique</button>
+                <button class="btn btn-submit">Créer une critique</button>
+            </p>
+        </section>
+        <section class="main-section">
+            <article><h3>{% lorem %}</h3></article>
+            <article><h3>{% lorem %}</h3></article>
+            <article><h3>{% lorem %}</h3></article>
+        </section>
         {% else %}
             <div class="login">
                 <div>

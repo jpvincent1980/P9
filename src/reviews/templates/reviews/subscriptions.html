@@ -13,22 +13,22 @@
         <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
     </p>
 {% else %}
-            <section class="search">
+            <section class="main-section">
                 <h2>Bienvenue sur votre page d'abonnements {{ user.username }}.</h2>
             </section>
-            <section class="search">
+            <section class="main-section main-section-list">
                 <h2>Suivre d'autres utilisateurs</h2>
                 <form method="POST">
                     <input type="text" placeholder="Tapez le nom de l'utilisateur" id="id_user_search">
                     <input type="submit" value="S'inscrire" class="btn btn-submit">
                 </form>
             </section>
-            <section class="search search-list">
+            <section class="main-section main-section-list">
                 <h2>Abonnements</h2>
                 {% for user in followed_users %}
                     <div>
                         <h3>{{ user }}</h3>
-                        <span><a href="#">Se désabonner</a></span>
+                        <a href="#"><button class="btn btn-delete">Se désabonner</button></a>
                     </div>
                 {% empty %}
                 <div>
@@ -36,7 +36,7 @@
                 </div>
                 {% endfor %}
             </section>
-            <section class="search search-list">
+            <section class="main-section main-section-list">
                 <h2>Abonnés</h2>
                 {% for follower in followers %}
                     <div>

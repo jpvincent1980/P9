@@ -8,11 +8,14 @@
 
     {% block content %}
     {% if user.is_authenticated %}
+    <section class="main-section">
         <p><h2>Vous êtes déjà inscrit sur notre site.</h2></p>
         <p>
             <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
         </p>
+    </section>
     {% else %}
+    <section class="main-section">
         <form method="POST" class="signup">
             <h2>Inscrivez-vous</h2>
             {% csrf_token %}
@@ -30,5 +33,6 @@
                 <input type="submit" value="S'inscrire" class="btn btn-submit">
             </p>
         </form>
+    </section>
     {% endif %}
     {% endblock %}

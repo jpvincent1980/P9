@@ -11,7 +11,7 @@ body {
 
 input {
     background-color: #fff;
-    padding: .25rem;
+    padding: .5rem;
 }
 
 html, body {
@@ -43,22 +43,37 @@ header  a, nav  a, p a {
     text-align: center;
 }
 
-.login h2, .signup h2, .search h2 {
+.login h2, .signup h2, .main-section h2,form,p,article {
     margin-bottom: 1rem;
+    text-align: justify;
 }
 
-.search {
+.main-section {
     margin: 1rem auto;
     width: 50%;
 }
 
-.search-list > div {
+.main-section-list {
+    border: 0;
+    border-radius: .3rem;
+    padding: 1rem;
+    box-shadow: .5rem .5rem .5rem rgba(0,0,0,.25);
+}
+
+.main-section-list > div {
     display: flex;
     justify-content: space-between;
     padding: .5rem;
+    align-items: center;
+    min-height: 2.5rem;
 }
 
-.search-list > div:nth-child(even) {
+.main-section-list > div a {
+    padding: 0;
+    margin-right: .5rem;
+}
+
+.main-section-list > div:nth-child(even) {
     background-color: rgba(255,255,255,.5);
 }
 
@@ -98,6 +113,11 @@ header  a, nav  a, p a {
     background-color: steelblue;
 }
 
+.btn-delete {
+    color: #fff;
+    background-color: indianred;
+}
+
 .signup-confirmation {
     font-size: 3rem;
     text-align: center;
@@ -124,4 +144,12 @@ footer {
     display: flex;
     align-items: baseline;
     justify-content: space-around;
+}
+
+@media (max-width: 1024px) {
+
+    .main-section {
+        width: 90%;
+}
+
 }
