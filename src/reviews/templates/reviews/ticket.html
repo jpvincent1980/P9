@@ -36,7 +36,13 @@
                     {% endif %}
                     {% endfor %}
                     <div>
-                        <button class="btn btn-submit">Envoyer</button>
+                        <button class="btn btn-submit">
+                            {% if "update" in request.path %}
+                            Mettre à jour
+                            {% else %}
+                            Envoyer
+                            {% endif %}
+                        </button>
                     </div>
                 </form>
             </section>
