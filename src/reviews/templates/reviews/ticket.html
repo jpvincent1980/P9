@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <TITLE>Ticket</TITLE>
+{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+    <p>
+        <h2>Merci de vous identifier en page d'accueil afin de pouvoir poster un ticket.</h2>
+    </p>
+    <p>
+        <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+    </p>
+{% else %}
+            <section class="main-section">
+                <h2>{{ user.username }}, créez un ticket.</h2>
+            </section>
+            <section class="main-section main-section-list custom-fields">
+                {% for field in form %}
+                <p>{{ field.label_tag }}</p>
+                <p>{{ field }}</p>
+                {% endfor %}
+                <div>
+                    <button class="btn btn-submit">Envoyer</button>
+                </div>
+            </section>
+{% endif %}
+
+{% endblock %}

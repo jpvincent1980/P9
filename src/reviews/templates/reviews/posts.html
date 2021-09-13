@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% load custom_filters %}
+
+{% block title %}
+    <TITLE>Posts</TITLE>
+{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+    <p>
+        <h2>Merci de vous identifier en page d'accueil afin de pouvoir poster une critique</h2>
+    </p>
+    <p>
+        <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+    </p>
+{% else %}
+            <section class="main-section">
+                <h2>{{ user.username }}, voici votre fil de contenus:</h2>
+            </section>
+            {% for post in posts %}
+                <section class="main-section main-section-list posts shadow-box">
+                    {% if post|class_name == "Ticket" %}
+                        <div>
+                            <p>Votre ticket n° {{ post.id }} du {{ post.time_created }}</p>
+                            <p>{{ post.title }}</p>
+                            <p>{{ post.description }}</p>
+                            {% if post.image %}
+                                <p><img src="{{ post.image.url }}" alt="{{ post.image }}"></p>
+                            <br>
+                            {% endif %}
+                        </div>
+                        <p>
+                            <a href="{% url 'reviews:update-ticket' ticket_id=post.id %}"><button class="btn btn-submit">Modifier</button></a>
+                            <a href="{% url 'reviews:delete-ticket' ticket_id=post.id %}"><button class="btn btn-delete">Supprimer</button></a>
+                        </p>
+                    {% elif post|class_name == "Review" %}
+                        {{ post }}
+                    {% else %}
+                        <h2>Objet inconnu</h2>
+                    {% endif %}
+                    </section>
+                {% empty %}
+                    <h2>Vous n'avez demandé aucun ticket ni publié aucune critique.</h2>
+                {% endfor %}
+
+{% endif %}
+
+{% endblock %}

@@ -26,8 +26,8 @@
             </section>
             {% if result %}
             <section class="main-section main-section-list shadow-box"">
-                {% for user in result %}
                 <h2>Résultats</h2>
+                {% for user in result %}
                 <div>
                     <h3>{{ user }}</h3>
                     {% if result_type != "str" %}

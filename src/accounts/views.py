@@ -64,28 +64,34 @@ def subscriptions_view(request):
     followed_users = [CustomUser.objects.get(pk=user_id) for user_id in followed_users]
     context = {"followers": followers,
                "followed_users": followed_users}
-    if request.method == "POST" and (request.POST["user_search"] is not None or request.POST["user_search"] != ""):
-        searched_user = CustomUser.objects.filter(username=request.POST["user_search"])
-        if len(searched_user) > 0:
-            context = {"followers": followers,
-                       "followed_users": followed_users,
-                       "result": searched_user,
-                       "result_type": "QuerySet"}
-        else:
-            message = "Aucun utilisateur " + \
-                      request.POST["user_search"] + \
-                      " n'a été trouvé."
-            context = {"followers": followers,
-                       "followed_users": followed_users,
-                       "result": [message],
-                       "result_type": "str"}
+    if request.method == "POST":
+        if request.POST["user_search"]:
+            searched_user = CustomUser.objects.filter(username__icontains=request.POST["user_search"])
+            current_subscriptions = UserFollows.objects.filter(user_id=current_user_id).values()
+            user_ids_to_exclude = [i["followed_user_id"] for i in current_subscriptions]
+            # Exclude already followed users
+            for id in user_ids_to_exclude:
+                searched_user = searched_user.exclude(id=id)
+            if request.POST["user_search"] != "" and searched_user.count() > 0:
+                context = {"followers": followers,
+                           "followed_users": followed_users,
+                           "result": searched_user,
+                           "result_type": "QuerySet"}
+            else:
+                message = "Aucun utilisateur auquel vous n'êtes pas déjà " \
+                          "abonné n'a été trouvé."
+                context = {"followers": followers,
+                           "followed_users": followed_users,
+                           "result": [message],
+                           "result_type": "str"}
     return render(request, "accounts/subscriptions.html", context)
 
 
 def subscribe_view(request, user_id):
     subscription = UserFollows.objects.create(followed_user_id=user_id, user_id=request.user.id)
     subscription.save()
-    return subscriptions_view(request)
+    return redirect("accounts:subscriptions")
+    # return subscriptions_view(request)
 
 
 def unsubscribe_view(request, user_id):

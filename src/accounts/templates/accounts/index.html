@@ -14,8 +14,8 @@
         </section>
         <section class="main-section">
             <p>
-                <button class="btn btn-submit">Demander une critique</button>
-                <button class="btn btn-submit">Créer une critique</button>
+                <a href="{% url 'reviews:create-ticket' %}"><button class="btn btn-submit">Demander une critique</button></a>
+                <a href="{% url 'reviews:create-review' %}"><button class="btn btn-submit">Créer une critique</button></a>
             </p>
         </section>
         <section class="main-section">

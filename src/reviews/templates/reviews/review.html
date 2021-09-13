@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <TITLE>Critique</TITLE>
+{% endblock %}
+
+{% block content %}
+{% if not user.is_authenticated %}
+    <p>
+        <h2>Merci de vous identifier en page d'accueil afin de pouvoir poster une critique</h2>
+    </p>
+    <p>
+        <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
+    </p>
+{% else %}
+            <section class="main-section">
+                {% if ticket_id is None %}
+                <h2>{{ user.username }}, créez une critique.</h2>
+                {% else %}
+                <h2>{{ user.username }}, créez une critique en réponse au ticket n° {{ ticket_id }} de </h2>
+                {% endif %}
+            </section>
+            <section class="main-section main-section-list custom-fields">
+                {% for field in form %}
+                <p>{{ field.label_tag }}</p>
+                <p>{{ field }}</p>
+                {% endfor %}
+                <div>
+                    <button class="btn btn-submit">Envoyer</button>
+                </div>
+            </section>
+{% endif %}
+
+{% endblock %}

@@ -1,12 +1,19 @@
 @import "reset.css";
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
+:root {
+    --site-bg-color: rgba(230,230,230,1);
+    --list-alt-bg-color: rgba(255,255,255,.5);
+    --btn-submit-bg-color: steelblue;
+    --btn-delete-bg-color: indianred;
+}
+
 * {
     font-family: 'Josefin Sans', sans-serif;
 }
 
 body {
-    background-color: rgba(230,230,230,1);
+    background-color: var(--site-bg-color);
 }
 
 input {
@@ -23,13 +30,6 @@ header {
     align-items: baseline;
     justify-content: space-around;
 }
-
-/*
-header  a, nav  a, p a {
-    text-decoration: none;
-    padding: 1rem;
-}
-*/
 
  a {
     text-decoration: none;
@@ -78,7 +78,38 @@ a:visited {
 }
 
 .main-section-list > div:nth-child(even) {
-    background-color: rgba(255,255,255,.5);
+    background-color: var(--list-alt-bg-color);
+}
+
+#id_rating {
+    list-style-type:none;
+}
+
+#id_rating input {
+    display: block;
+}
+
+#id_rating li {
+    display: inline;
+}
+
+#id_rating label::after {
+    content: "\1f7ca";
+    font-size: 2rem;
+    cursor: pointer;
+    color: white;
+}
+
+#id_rating label:hover::after {
+    color: black;
+}
+
+.custom-fields p {
+    margin-bottom: 1rem;
+}
+
+.custom-fields input, textarea {
+    width: 100%;
 }
 
 .signup {
@@ -114,12 +145,12 @@ a:visited {
 
 .btn-submit {
     color: #fff;
-    background-color: steelblue;
+    background-color: var(--btn-submit-bg-color);
 }
 
 .btn-delete {
     color: #fff;
-    background-color: indianred;
+    background-color: var(--btn-delete-bg-color);
 }
 
 .signup-confirmation {
@@ -144,10 +175,21 @@ main p {
     display: inline-block;
 }
 
+.posts div {
+    flex-direction: column;
+}
+
+.posts p {
+    margin-left: .5rem;
+    margin-bottom: 1rem;
+    text-align: right;
+}
+
 footer {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-around;
+    min-height: 1.5rem;
 }
 
 @media (max-width: 1024px) {
