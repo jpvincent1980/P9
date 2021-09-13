@@ -14,16 +14,22 @@
     </p>
 {% else %}
             <section class="main-section">
-                <h2>{{ user.username }}, créez un ticket.</h2>
+                    {% if "update" in request.path %}
+                        {% with phrase="mettez à jour votre ticket:" %}
+                        <h2>{{ user.username }}, {{ phrase }}</h2>
+                        {% endwith %}
+                    {% else %}
+                        {% with phrase="créez un ticket:" %}
+                        <h2>{{ user.username }}, {{ phrase }}</h2>
+                        {% endwith %}
+                    {% endif %}
             </section>
             <section class="main-section main-section-list custom-fields">
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
-                    {% if field.name == "image" %}
-                        <p>{{ field.label_tag }}</p>
+                    {% if field.id_for_label == "id_image" %}
                         <p>{{ field }}</p>
-                        <img src="{{ field.id_for_label }}" alt="{{ url }}" />
                     {% else %}
                         <p>{{ field.label_tag }}</p>
                         <p>{{ field }}</p>
