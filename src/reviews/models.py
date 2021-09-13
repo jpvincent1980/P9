@@ -1,17 +1,22 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-
-# Create your models here.
 from LITReview import settings
 
 
+# Create your models here.
 class Ticket(models.Model):
     title = models.CharField(max_length=128)
     description = models.TextField(max_length=2048, blank=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True, upload_to="reviews")
     time_created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def max_width(self):
+        if self.image.width > 400:
+            return 400
+        return self.image.width
 
 
 class Review(models.Model):

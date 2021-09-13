@@ -24,3 +24,10 @@ class TicketForm(ModelForm):
         model = Ticket
         exclude = ["user"]
         labels = {"title": "Titre"}
+
+
+class UpdateTicketForm(ModelForm):
+    class Meta:
+        model = Ticket
+        exclude = ["user"]
+        labels = {"title": "Titre"}

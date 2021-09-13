@@ -17,13 +17,22 @@
                 <h2>{{ user.username }}, créez un ticket.</h2>
             </section>
             <section class="main-section main-section-list custom-fields">
-                {% for field in form %}
-                <p>{{ field.label_tag }}</p>
-                <p>{{ field }}</p>
-                {% endfor %}
-                <div>
-                    <button class="btn btn-submit">Envoyer</button>
-                </div>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    {% if field.name == "image" %}
+                        <p>{{ field.label_tag }}</p>
+                        <p>{{ field }}</p>
+                        <img src="{{ field.id_for_label }}" alt="{{ url }}" />
+                    {% else %}
+                        <p>{{ field.label_tag }}</p>
+                        <p>{{ field }}</p>
+                    {% endif %}
+                    {% endfor %}
+                    <div>
+                        <button class="btn btn-submit">Envoyer</button>
+                    </div>
+                </form>
             </section>
 {% endif %}
 

@@ -91,7 +91,6 @@ def subscribe_view(request, user_id):
     subscription = UserFollows.objects.create(followed_user_id=user_id, user_id=request.user.id)
     subscription.save()
     return redirect("accounts:subscriptions")
-    # return subscriptions_view(request)
 
 
 def unsubscribe_view(request, user_id):

@@ -22,17 +22,21 @@
                 <section class="main-section main-section-list posts shadow-box">
                     {% if post|class_name == "Ticket" %}
                         <div>
-                            <p>Votre ticket n° {{ post.id }} du {{ post.time_created }}</p>
+                            <p>Votre ticket du {{ post.time_created }}</p>
                             <p>{{ post.title }}</p>
                             <p>{{ post.description }}</p>
                             {% if post.image %}
-                                <p><img src="{{ post.image.url }}" alt="{{ post.image }}"></p>
+                                <p><img src="{{ post.image.url }}" alt="{{ post.image }}" width="{{ post.max_width }}"></p>
                             <br>
                             {% endif %}
                         </div>
                         <p>
-                            <a href="{% url 'reviews:update-ticket' ticket_id=post.id %}"><button class="btn btn-submit">Modifier</button></a>
-                            <a href="{% url 'reviews:delete-ticket' ticket_id=post.id %}"><button class="btn btn-delete">Supprimer</button></a>
+                            <a href="{% url 'reviews:update-ticket' pk=post.id %}">
+                                <button type="submit" class="btn btn-submit">Modifier</button>
+                            </a>
+                            <a href="{% url 'reviews:delete-ticket' pk=post.id %}">
+                                <button type="submit" class="btn btn-delete">Supprimer</button>
+                            </a>
                         </p>
                     {% elif post|class_name == "Review" %}
                         {{ post }}

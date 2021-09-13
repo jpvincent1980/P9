@@ -16,7 +16,7 @@ body {
     background-color: var(--site-bg-color);
 }
 
-input {
+input, textarea {
     background-color: #fff;
     padding: .5rem;
 }
