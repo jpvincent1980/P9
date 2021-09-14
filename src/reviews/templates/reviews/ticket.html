@@ -24,17 +24,11 @@
                         {% endwith %}
                     {% endif %}
             </section>
-            <section class="main-section main-section-list custom-fields">
+            <section  class="main-section main-section-list custom-fields">
                 <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    {% if field.id_for_label == "id_image" %}
-                        <p>{{ field }}</p>
-                    {% else %}
-                        <p>{{ field.label_tag }}</p>
-                        <p>{{ field }}</p>
-                    {% endif %}
-                    {% endfor %}
+                    <div class="shadow-box">
+                        {% include "reviews/ticket-snippet.html" %}
+                    </div>
                     <div>
                         <button class="btn btn-submit">
                             {% if "update" in request.path %}

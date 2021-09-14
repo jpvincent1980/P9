@@ -1,0 +1,9 @@
+    {% csrf_token %}
+    {% for field in ticket_form %}
+    {% if field.id_for_label == "id_image" %}
+        <p>{{ field }}</p>
+    {% else %}
+        <p>{{ field.label_tag }}</p>
+        <p>{{ field }}</p>
+    {% endif %}
+    {% endfor %}
