@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,9 +7,31 @@ from django.views.generic import CreateView
 
 from accounts.forms import SignupForm, LoginForm
 from accounts.models import CustomUser, UserFollows
+from reviews.models import Ticket
 
 
 # Create your views here.
+def index_view(request):
+    if request.user.is_authenticated:
+        followed_users = UserFollows.objects.filter(user_id=request.user.id).values()
+        followed_users = [user.get("followed_user_id") for user in followed_users]
+        followed_users_tickets = Ticket.objects.filter(user_id__in=followed_users)
+        posts = followed_users_tickets
+        context = {"Test": followed_users_tickets,
+                   "posts": posts}
+        return render(request, "reviews/flux.html", context)
+    form = LoginForm
+    context = {"form": form}
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("accounts:index")
+    return render(request, "accounts/index.html", context)
+
+
 class SignupView(CreateView):
     form_class = SignupForm
     template_name = "accounts/signup.html"
@@ -23,19 +46,6 @@ class SignupView(CreateView):
         user = authenticate(self.request, username=username, password=password)
         login(self.request, user)
         return HttpResponseRedirect(reverse('accounts:index'))
-
-
-def index_view(request):
-    form = LoginForm
-    context = {"form": form}
-    if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect("accounts:index")
-    return render(request, "accounts/index.html", context)
 
 
 def account_created_view(request):
@@ -57,12 +67,18 @@ def logout_view(request):
 def subscriptions_view(request):
     current_user_id = request.user.id
     followers = UserFollows.objects.filter(followed_user_id=current_user_id).values()
+    nb_of_followers = followers.aggregate(total_followers=Count("user_id"))
+    nb_of_followers = nb_of_followers.get("total_followers")
     followers = [follower["user_id"] for follower in followers]
     followed_users = UserFollows.objects.filter(user_id=current_user_id).values()
+    nb_of_subscriptions = followed_users.aggregate(total_subscriptions=Count("followed_user_id"))
+    nb_of_subscriptions = nb_of_subscriptions.get("total_subscriptions")
     followed_users = [user["followed_user_id"] for user in followed_users]
     followers = [CustomUser.objects.get(pk=follower_id) for follower_id in followers]
     followed_users = [CustomUser.objects.get(pk=user_id) for user_id in followed_users]
-    context = {"followers": followers,
+    context = {"nb_of_followers": nb_of_followers,
+               "nb_of_subscriptions": nb_of_subscriptions,
+               "followers": followers,
                "followed_users": followed_users}
     if request.method == "POST":
         if request.POST["user_search"]:
@@ -73,14 +89,17 @@ def subscriptions_view(request):
             for id in user_ids_to_exclude:
                 searched_user = searched_user.exclude(id=id)
             if request.POST["user_search"] != "" and searched_user.count() > 0:
-                context = {"followers": followers,
+                context = {"nb_of_followers": nb_of_followers,
+                           "nb_of_subscriptions": nb_of_subscriptions,
+                           "followers": followers,
                            "followed_users": followed_users,
                            "result": searched_user,
                            "result_type": "QuerySet"}
             else:
                 message = "Aucun utilisateur auquel vous n'êtes pas déjà " \
                           "abonné n'a été trouvé."
-                context = {"followers": followers,
+                context = {"nb_of_followers": nb_of_followers,
+                           "nb_of_subscriptions": nb_of_subscriptions,"followers": followers,
                            "followed_users": followed_users,
                            "result": [message],
                            "result_type": "str"}

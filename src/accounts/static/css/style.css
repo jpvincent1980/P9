@@ -21,6 +21,10 @@ input, textarea {
     padding: .5rem;
 }
 
+textarea {
+    border: 2px solid;
+}
+
 html, body {
     height: 100%;
 }
@@ -56,6 +60,11 @@ a:visited {
 .main-section {
     margin: 1rem auto;
     width: 50%;
+}
+
+.inside-section {
+    width: 90%;
+    margin: 1rem auto;
 }
 
 .shadow-box {

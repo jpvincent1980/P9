@@ -12,6 +12,9 @@ class Ticket(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to="reviews")
     time_created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
     @property
     def max_width(self):
         if self.image.width > 400:
@@ -28,3 +31,6 @@ class Review(models.Model):
     headline = models.CharField(max_length=128)
     body = models.TextField(max_length=8192, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.headline

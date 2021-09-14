@@ -7,18 +7,26 @@ from django.utils.translation import gettext_lazy as _, ugettext_lazy
 
 from reviews.models import Review, Ticket
 
+CHOICES = [(1, ""), (2, ""), (3, ""), (4, ""), (5, "")]
+
 
 class ReviewForm(ModelForm):
-    CHOICES = [(1,""),
-               (2,""),
-               (3,""),
-               (4,""),
-               (5,"")]
     rating = ChoiceField(label="Votre note", choices=CHOICES, widget=RadioSelect)
 
     class Meta:
         model = Review
         fields = ["headline","rating","body"]
+        labels = {"headline": _("Titre"),
+                  "body": _("Votre critique")}
+
+
+class UpdateReviewForm(ModelForm):
+    rating = ChoiceField(label="Votre note", choices=CHOICES,
+                         widget=RadioSelect)
+
+    class Meta:
+        model = Review
+        fields = ["headline", "rating", "body"]
         labels = {"headline": _("Titre"),
                   "body": _("Votre critique")}
 

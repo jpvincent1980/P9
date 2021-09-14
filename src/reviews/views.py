@@ -6,7 +6,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from accounts.models import CustomUser
-from reviews.forms import ReviewForm, TicketForm, UpdateTicketForm
+from reviews.forms import ReviewForm, TicketForm, UpdateTicketForm, \
+    UpdateReviewForm
 from reviews.models import Ticket, Review
 
 
@@ -16,16 +17,45 @@ class ReviewDetailView(DetailView):
 
 
 def create_review_view(request, ticket_id=None):
+    if request.method == "POST":
+        ticket = Ticket.objects.create(title=request.POST.get("title"),
+                                       description=request.POST.get("description"),
+                                       image=request.POST.get("image"),
+                                       user=request.user)
+        review = Review.objects.create(headline=request.POST.get("headline"),
+                                       rating=request.POST.get("rating"),
+                                       body=request.POST.get("body"),
+                                       user=request.user,
+                                       ticket=ticket)
+        return redirect("reviews:posts")
     review_form = ReviewForm()
+    if ticket_id:
+        ticket = Ticket.objects.get(pk=ticket_id)
+        context = {"review_form": review_form,
+                   "ticket": ticket,
+                   "ticket_id": ticket_id}
+        return render(request, "reviews/review.html", context)
     ticket_form = TicketForm()
     context = {"review_form": review_form,
-               "ticket_form": ticket_form,
-               "ticket_id": ticket_id}
+               "ticket_form": ticket_form}
     return render(request, "reviews/review.html", context)
 
 
 class UpdateReviewView(UpdateView):
-    pass
+    model = Review
+    form_class = UpdateReviewForm
+    template_name = "reviews/review.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateReviewView, self).get_context_data(**kwargs)
+        context["review_form"] = context["form"]
+        return context
+
+    def form_valid(self, form):
+        ticket = form.save(commit=False)
+        ticket.user = CustomUser.objects.get(pk=self.request.user.id)
+        ticket.save()
+        return redirect("reviews:posts")
 
 
 def delete_review_view(request, review_id):
@@ -79,9 +109,11 @@ def delete_ticket_view(request, pk):
 
 def posts_view(request):
     tickets = Ticket.objects.filter(user=request.user.id)
-    tickets.annotate(content_type=Value("Ticket", CharField()))
+    tickets = tickets.annotate(content_type=Value("Ticket", CharField()))
     reviews = Review.objects.filter(user=request.user.id)
-    reviews.annotate(content_type=Value("Review", CharField()))
-    posts = sorted(chain(tickets, reviews), key=attrgetter("time_created"), reverse=True)
+    reviews = reviews.annotate(content_type=Value("Review", CharField()))
+    posts = sorted(chain(tickets, reviews),
+                   key=attrgetter("time_created"),
+                   reverse=True)
     context = {"posts": posts}
     return render(request, "reviews/posts.html", context)

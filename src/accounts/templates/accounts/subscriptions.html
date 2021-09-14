@@ -38,7 +38,7 @@
             </section>
             {% endif %}
             <section class="main-section main-section-list shadow-box">
-                <h2>Abonnements</h2>
+                <h2>Abonnements ({{ nb_of_subscriptions }})</h2>
                 {% for user in followed_users %}
                     <div>
                         <h3>{{ user }}</h3>
@@ -51,7 +51,7 @@
                 {% endfor %}
             </section>
             <section class="main-section main-section-list shadow-box">
-                <h2>Abonnés</h2>
+                <h2>Abonnés ({{ nb_of_followers }})</h2>
                 {% for follower in followers %}
                     <div>
                         <h3>{{ follower }}</h3>

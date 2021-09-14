@@ -1,9 +1,8 @@
-    {% csrf_token %}
-    {% for field in ticket_form %}
-    {% if field.id_for_label == "id_image" %}
-        <p>{{ field }}</p>
-    {% else %}
-        <p>{{ field.label_tag }}</p>
-        <p>{{ field }}</p>
-    {% endif %}
-    {% endfor %}
+    <div class="inside-section shadow-box">
+        <p>{{ ticket.user }} a demandé une critique le {{ ticket.time_created|date:"d F Y" }} à {{ ticket.time_created|date:"H:s" }}</p>
+        <p>{{ ticket.title }}</p>
+        <p>{{ ticket.description }}</p>
+        {% if ticket.image %}
+        <p>{{ ticket.image }}</p>
+        {% endif %}
+    </div>

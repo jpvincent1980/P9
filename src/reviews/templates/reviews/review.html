@@ -14,21 +14,20 @@
     </p>
 {% else %}
             <section class="main-section">
-                {% if ticket_id is None %}
                 <h2>{{ user.username }}, créez une critique.</h2>
-                {% else %}
-                <h2>{{ user.username }}, créez une critique en réponse au ticket n° {{ ticket_id }} de </h2>
-                {% endif %}
             </section>
             <section  class="main-section main-section-list custom-fields">
                 <form method="POST" enctype="multipart/form-data">
                     <div class="shadow-box">
-                        <h2>Livre / Article</h2>
+                        {% if ticket_id %}
+                        <h2>Vous êtes en train de poster en réponse à :</h2>
                         {% include "reviews/ticket-snippet.html" %}
-<!--                    </div>-->
-<!--                    <div class="shadow-box">-->
+                        {% else %}
+                        <h2>Livre / Article</h2>
+                        {% include "reviews/ticket-form-snippet.html" %}
+                        {% endif %}
                         <h2>Critique</h2>
-                        {% include "reviews/review-snippet.html" %}
+                        {% include "reviews/review-form-snippet.html" %}
                     </div>
                     <div>
                         <button class="btn btn-submit">Envoyer</button>

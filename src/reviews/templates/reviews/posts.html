@@ -22,7 +22,7 @@
                 <section class="main-section main-section-list posts shadow-box">
                     {% if post|class_name == "Ticket" %}
                         <div>
-                            <p>Votre ticket du {{ post.time_created }}</p>
+                            <p>Votre ticket du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
                             <p>{{ post.title }}</p>
                             <p>{{ post.description }}</p>
                             {% if post.image %}
@@ -38,8 +38,20 @@
                                 <button type="submit" class="btn btn-delete">Supprimer</button>
                             </a>
                         </p>
-                    {% elif post|class_name == "Review" %}
-                        {{ post }}
+                        {% elif post.content_type == "Review" %}
+                        <div>
+                            <p>Votre critique du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                            <p>{{ post.headline }}</p>
+                            <p>{{ post.body }}</p>
+                        </div>
+                        <p>
+                            <a href="{% url 'reviews:update-review' pk=post.id %}">
+                                <button type="submit" class="btn btn-submit">Modifier</button>
+                            </a>
+                            <a href="{% url 'reviews:delete-review' pk=post.id %}">
+                                <button type="submit" class="btn btn-delete">Supprimer</button>
+                            </a>
+                        </p>
                     {% else %}
                         <h2>Objet inconnu</h2>
                     {% endif %}
