@@ -18,6 +18,7 @@
             </section>
             <section  class="main-section main-section-list custom-fields">
                 <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="shadow-box">
                         {% if ticket_id %}
                         <h2>Vous êtes en train de poster en réponse à :</h2>

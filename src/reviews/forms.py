@@ -43,7 +43,7 @@ class CustomImageFieldWidget(FileInput):
     input_text = ugettext_lazy('Nouvelle image')
     template_with_initial = '<p>%(initial_text)s: </p><p>%(initial)s </p>' \
                             '<p>%(input_text)s: </p><p>%(input)s </p>'
-    url_markup_template = '<img src="{0}" alt="{1}" width="{2}"/>'
+    url_markup_template = '<img src="{0}" alt="{1}"/>'
 
     def render(self, name, value, attrs=None, renderer=None):
         substitutions = {'initial_text': self.initial_text,
@@ -56,8 +56,7 @@ class CustomImageFieldWidget(FileInput):
             template = self.template_with_initial
             substitutions['initial'] = format_html(self.url_markup_template,
                                                    value.url,
-                                                   force_text(value),
-                                                   400)
+                                                   force_text(value))
 
         return mark_safe(template % substitutions)
 

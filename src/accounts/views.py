@@ -1,5 +1,8 @@
+from itertools import chain
+from operator import attrgetter
+
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Count
+from django.db.models import Count, Value, CharField
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -7,7 +10,7 @@ from django.views.generic import CreateView
 
 from accounts.forms import SignupForm, LoginForm
 from accounts.models import CustomUser, UserFollows
-from reviews.models import Ticket
+from reviews.models import Ticket, Review
 
 
 # Create your views here.
@@ -15,8 +18,13 @@ def index_view(request):
     if request.user.is_authenticated:
         followed_users = UserFollows.objects.filter(user_id=request.user.id).values()
         followed_users = [user.get("followed_user_id") for user in followed_users]
-        followed_users_tickets = Ticket.objects.filter(user_id__in=followed_users)
-        posts = followed_users_tickets
+        # Tickets des utilisateurs suivis
+        followed_users_tickets = Ticket.objects.filter(user_id__in=followed_users).annotate(content_type=Value("Ticket", CharField()))
+        # Critiques des utilisateurs suivis
+        followed_users_reviews = Review.objects.filter(user_id__in=followed_users).annotate(content_type=Value("Review", CharField()))
+        posts = sorted(chain(followed_users_tickets,followed_users_reviews),
+                       key=attrgetter("time_created"),
+                       reverse=True)
         context = {"Test": followed_users_tickets,
                    "posts": posts}
         return render(request, "reviews/flux.html", context)

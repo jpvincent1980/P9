@@ -1,8 +1,8 @@
-    <div class="inside-section shadow-box">
-        <p>{{ ticket.user }} a demandé une critique le {{ ticket.time_created|date:"d F Y" }} à {{ ticket.time_created|date:"H:s" }}</p>
-        <p>{{ ticket.title }}</p>
-        <p>{{ ticket.description }}</p>
-        {% if ticket.image %}
-        <p>{{ ticket.image }}</p>
+    <div>
+        <p>{{ post.user }} a demandé une critique le {{ post.time_created|date:"d F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+        <p>{{ post.title }}</p>
+        <p>{{ post.description }}</p>
+        {% if post.image %}
+        <p><img src="{{ post.image.url }}" alt="{{ post.image }}"></p>
         {% endif %}
     </div>

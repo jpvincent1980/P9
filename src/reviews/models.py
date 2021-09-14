@@ -1,5 +1,9 @@
+import os
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+
+from PIL import Image
 
 from LITReview import settings
 
@@ -20,6 +24,19 @@ class Ticket(models.Model):
         if self.image.width > 400:
             return 400
         return self.image.width
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Ticket,self).save(force_insert=False,
+                                force_update=False,
+                                using=None,
+                                update_fields=None)
+        if self.image:
+            updated_image = Image.open(self.image)
+            if updated_image.width > 400 or updated_image.height > 250:
+                output_size = (400,250)
+                updated_image.thumbnail(output_size)
+                updated_image.save(self.image.path)
 
 
 class Review(models.Model):

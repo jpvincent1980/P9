@@ -17,24 +17,21 @@ class ReviewDetailView(DetailView):
 
 
 def create_review_view(request, ticket_id=None):
+    review_form = ReviewForm()
+    if ticket_id and request.method != "POST":
+        ticket = Ticket.objects.get(pk=ticket_id)
+        context = {"review_form": review_form,
+                   "ticket": ticket,
+                   "ticket_id": ticket_id}
+        return render(request, "reviews/review.html", context)
     if request.method == "POST":
-        ticket = Ticket.objects.create(title=request.POST.get("title"),
-                                       description=request.POST.get("description"),
-                                       image=request.POST.get("image"),
-                                       user=request.user)
+        ticket = Ticket.objects.get(pk=ticket_id)
         review = Review.objects.create(headline=request.POST.get("headline"),
                                        rating=request.POST.get("rating"),
                                        body=request.POST.get("body"),
                                        user=request.user,
                                        ticket=ticket)
         return redirect("reviews:posts")
-    review_form = ReviewForm()
-    if ticket_id:
-        ticket = Ticket.objects.get(pk=ticket_id)
-        context = {"review_form": review_form,
-                   "ticket": ticket,
-                   "ticket_id": ticket_id}
-        return render(request, "reviews/review.html", context)
     ticket_form = TicketForm()
     context = {"review_form": review_form,
                "ticket_form": ticket_form}
