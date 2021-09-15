@@ -22,7 +22,7 @@
                 <section class="main-section main-section-list posts shadow-box">
                     {% if post|class_name == "Ticket" %}
                         <div>
-                            <p>Votre ticket du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                            <p>Votre demande de critique du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
                             <p>{{ post.title }}</p>
                             <p>{{ post.description }}</p>
                             {% if post.image %}
@@ -30,7 +30,7 @@
                             <br>
                             {% endif %}
                         </div>
-                        <p>
+                        <p class="button_right">
                             <a href="{% url 'reviews:update-ticket' pk=post.id %}">
                                 <button type="submit" class="btn btn-submit">Modifier</button>
                             </a>
@@ -43,8 +43,20 @@
                             <p>Votre critique du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
                             <p>{{ post.headline }}</p>
                             <p>{{ post.body }}</p>
+                            <div class="inside-section shadow-box">
+                                    {% if post.ticket.user.id == user.id %}
+                                        <p>Votre demande de critique du {{ post.time_created|date:"d F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                                    {% else %}
+                                        <p>{{ post.ticket.user }} a demandé une critique le {{ post.time_created|date:"d F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                                    {% endif %}
+                                    <p>{{ post.ticket.title }}</p>
+                                    <p>{{ post.ticket.description }}</p>
+                                    {% if post.ticket.image %}
+                                    <p><img src="{{ post.ticket.image.url }}" alt="{{ post.ticket.image }}"></p>
+                                    {% endif %}
+                            </div>
                         </div>
-                        <p>
+                        <p class="button_right">
                             <a href="{% url 'reviews:update-review' pk=post.id %}">
                                 <button type="submit" class="btn btn-submit">Modifier</button>
                             </a>

@@ -22,7 +22,9 @@
                     <div class="shadow-box">
                         {% if ticket_id %}
                         <h2>Vous êtes en train de poster en réponse à :</h2>
+                        <div class="inside-section shadow-box">
                         {% include "reviews/ticket-snippet.html" %}
+                        </div>
                         {% else %}
                         <h2>Livre / Article</h2>
                         {% include "reviews/ticket-form-snippet.html" %}
@@ -30,7 +32,7 @@
                         <h2>Critique</h2>
                         {% include "reviews/review-form-snippet.html" %}
                     </div>
-                    <div>
+                    <div class="button_right">
                         <button class="btn btn-submit">Envoyer</button>
                     </div>
                 </form>

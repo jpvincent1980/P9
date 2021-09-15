@@ -11,21 +11,28 @@ from django.views.generic import CreateView
 from accounts.forms import SignupForm, LoginForm
 from accounts.models import CustomUser, UserFollows
 from reviews.models import Ticket, Review
+from reviews.views import get_followed_users_open_tickets, \
+    get_followed_users_tickets_answered_by_others, \
+    get_own_reviews_from_others_tickets, get_reviews_from_followed_users
 
 
 # Create your views here.
 def index_view(request):
     if request.user.is_authenticated:
-        followed_users = UserFollows.objects.filter(user_id=request.user.id).values()
-        followed_users = [user.get("followed_user_id") for user in followed_users]
-        # Tickets des utilisateurs suivis
-        followed_users_tickets = Ticket.objects.filter(user_id__in=followed_users).annotate(content_type=Value("Ticket", CharField()))
-        # Critiques des utilisateurs suivis
-        followed_users_reviews = Review.objects.filter(user_id__in=followed_users).annotate(content_type=Value("Review", CharField()))
-        posts = sorted(chain(followed_users_tickets,followed_users_reviews),
+        # Tickets ouverts des utilisateurs suivis
+        open_tickets = get_followed_users_open_tickets(request.user.id)
+        # Tickets des utilisateurs suivis répondus par un autre
+        closed_posts = get_followed_users_tickets_answered_by_others(request.user.id)
+        tickets = open_tickets.union(closed_posts)
+        # Reviews de l'utilisateur
+        reviews_by_self = get_own_reviews_from_others_tickets(request.user.id)
+        # Reviews des utilisateurs suivis
+        reviews_by_followed_users = get_reviews_from_followed_users(request.user.id)
+        reviews = reviews_by_self.union(reviews_by_followed_users)
+        posts = sorted(chain(tickets, reviews),
                        key=attrgetter("time_created"),
                        reverse=True)
-        context = {"Test": followed_users_tickets,
+        context = {"Test": "Ceci est un test",
                    "posts": posts}
         return render(request, "reviews/flux.html", context)
     form = LoginForm
