@@ -51,3 +51,7 @@ class Review(models.Model):
 
     def __str__(self):
         return self.headline
+
+    @property
+    def stars(self):
+        return "".join(["🟊" for _ in range(self.rating)])

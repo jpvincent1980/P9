@@ -6,6 +6,7 @@
     --list-alt-bg-color: rgba(255,255,255,.5);
     --btn-submit-bg-color: steelblue;
     --btn-delete-bg-color: indianred;
+    --stars-font-size: 50px;
 }
 
 * {
@@ -31,8 +32,9 @@ html, body {
 
 header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-around;
+    height: 10%;
 }
 
 a {
@@ -107,20 +109,6 @@ a:visited {
 
 }
 
-#id_rating label::after {
-    position: absolute;
-    top: -1.05rem;
-    left: .105rem;
-    content: "\1f7ca";
-    font-size: 2rem;
-    cursor: pointer;
-    color: white;
-}
-
-#id_rating label:hover::after {
-    color: steelblue;
-}
-
 .custom-fields p {
     margin-bottom: 1rem;
 }
@@ -187,7 +175,7 @@ a:visited {
 }
 
 main {
-    min-height: 90%;
+    min-height: 80%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -196,11 +184,6 @@ main {
 
 main p {
     margin: auto;
-}
-
-#id_password::after {
-    content: "Test";
-    display: inline-block;
 }
 
 .posts div {
@@ -213,6 +196,12 @@ main p {
     text-align: left;
 }
 
+.stars {
+    font-size: var(--stars-font-size);
+    color: steelblue;
+    padding: 0;
+}
+
 .main-section .button_right {
     text-align: right;
 }
@@ -221,8 +210,43 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    min-height: 1.5rem;
+    height: 10%;
 }
+
+/* Star rating handling */
+
+.wrapper {
+  display: inline-block;
+}
+
+.wrapper * {
+  float: right;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.wrapper label {
+    color: #fff;
+    font-size: var(--stars-font-size);
+}
+
+input:checked ~ label {
+  color: steelblue;
+}
+
+label:hover,
+label:hover ~ label {
+  color: steelblue;
+}
+
+input:checked ~ label:hover,
+input:checked ~ label:hover ~ label {
+  color: grey !important;
+}
+
+/* End of star rating handling */
 
 @media (max-width: 1024px) {
 

@@ -1,4 +1,14 @@
     {% for field in review_form %}
     <p>{{ field.label_tag }}</p>
-    <p>{{ field }}</p>
+    {% if "id_rating" in field.id_for_label %}
+    <div class="wrapper">
+        {% for subfield in field %}
+                {{ subfield.tag }}
+                <label for="{{ subfield.id_for_label }}">&#128970;</label>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>{{ field }}</p>
+    {% endif %}
+
     {% endfor %}

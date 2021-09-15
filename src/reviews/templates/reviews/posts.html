@@ -43,6 +43,7 @@
                             <p>Votre critique du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
                             <p>{{ post.headline }}</p>
                             <p>{{ post.body }}</p>
+                            <p class="stars">{{ post.stars }}</p>
                             <div class="inside-section shadow-box">
                                     {% if post.ticket.user.id == user.id %}
                                         <p>Votre demande de critique du {{ post.time_created|date:"d F Y" }} à {{ post.time_created|date:"H:s" }}</p>

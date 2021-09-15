@@ -7,7 +7,8 @@ from django.utils.translation import gettext_lazy as _, ugettext_lazy
 
 from reviews.models import Review, Ticket
 
-CHOICES = [(1, ""), (2, ""), (3, ""), (4, ""), (5, "")]
+# In reverse order on purpose so that star rating system is working
+CHOICES = [(5, ""), (4, ""), (3, ""), (2, ""), (1, "")]
 
 
 class ReviewForm(ModelForm):
