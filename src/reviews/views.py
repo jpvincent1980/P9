@@ -128,15 +128,6 @@ def get_open_tickets(user_id):
     return user_open_tickets
 
 
-# def get_own_tickets_answered_by_others(user_id):
-#     user_tickets = Ticket.objects.filter(user=user_id)
-#     reviews = Review.objects.values()
-#     answered_by_others = [element.get("ticket_id") for element in reviews if element["user_id"] != user_id]
-#     user_tickets_closed_by_others = user_tickets.filter(id__in=answered_by_others)
-#     user_tickets_closed_by_others = user_tickets_closed_by_others.annotate(content_type=Value("Closed-tickets", CharField()))
-#     return user_tickets_closed_by_others
-
-
 def get_own_tickets_answered_by_self(user_id):
     user_tickets = Ticket.objects.filter(user=user_id)
     reviews = Review.objects.values()
