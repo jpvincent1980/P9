@@ -13,9 +13,9 @@ const backToTopButton = document.getElementById("backToTop");
 window.onscroll = function() {scrollFunction()};
 function scrollFunction() {
   if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-    backToTopButton.style.display = "block";
+    backToTopButton.style.opacity = 1;
   } else {
-    backToTopButton.style.display = "none";
+    backToTopButton.style.opacity = 0;
   }
 }
 function backToTopFunction() {
