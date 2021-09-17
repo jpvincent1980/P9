@@ -18,10 +18,12 @@
         </a>
         {% if request.user.is_authenticated %}
             <nav>
-                    <a href="{% url 'accounts:index' %}">Flux</a>
-                    <a href="{% url 'reviews:posts' %}">Posts</a>
-                    <a href="{% url 'accounts:subscriptions' %}">Abonnements</a>
-                    <a href="{% url 'accounts:logout' %}">Se déconnecter</a>
+                <ul>
+                    <li><a href="{% url 'accounts:index' %}">Flux</a></li>
+                    <li><a href="{% url 'reviews:posts' %}">Posts</a></li>
+                    <li><a href="{% url 'accounts:subscriptions' %}">Abonnements</a></li>
+                    <li><a href="{% url 'accounts:logout' %}">Se déconnecter</a></li>
+                </ul>
             </nav>
         {% endif %}
     </header>
