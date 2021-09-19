@@ -12,17 +12,63 @@
         <section class="main-section">
                 <h2>Bienvenue {{ user.username }} !</h2>
         </section>
-        <section class="main-section">
-            <p>
-                <a href="{% url 'reviews:create-ticket' %}"><button class="btn btn-submit">Demander une critique</button></a>
-                <a href="{% url 'reviews:create-review' %}"><button class="btn btn-submit">Créer une critique</button></a>
-            </p>
+        {% for post in posts %}
+        <section class="main-section main-section-list posts shadow-box">
+            {% if "ticket" in post.content_type %}
+                        <div>
+                            <p>{{ post.user}} a demandé une critique le {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                            <p>{{ post.title }}</p>
+                            <p>{{ post.description }}</p>
+                            {% if post.image %}
+                                <p><img src="{{ post.image.url }}" alt="{{ post.image }}" width="{{ post.max_width }}"></p>
+                            <br>
+                            {% endif %}
+                        </div>
+                        {% if "Open" in post.content_type %}
+                            <p class="button_right">
+                                <a href="{% url 'reviews:create-review-ticket' ticket_id=post.id %}">
+                                    <button type="submit" class="btn btn-submit">Créer une critique</button>
+                                </a>
+                            </p>
+                        {% endif %}
+                        {% elif post.content_type == "Review" %}
+                        <div>
+                            {% if post.user.id == user.id %}
+                                <p>Votre critique du {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                            {% else %}
+                                <p>{{ post.user }} a posté la critique suivante le {{ post.time_created|date:"j F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                            {% endif %}
+                            <p>{{ post.headline }}</p>
+                            <p>{{ post.body }}</p>
+                            <p class="stars">{{ post.stars }}</p>
+                            <div class="inside-section shadow-box">
+                                    {% if post.ticket.user.id == user.id %}
+                                        <p>Votre demande de critique du {{ post.time_created|date:"d F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                                    {% else %}
+                                        <p>{{ post.ticket.user }} a demandé une critique le {{ post.time_created|date:"d F Y" }} à {{ post.time_created|date:"H:s" }}</p>
+                                    {% endif %}
+                                    <p>{{ post.ticket.title }}</p>
+                                    <p>{{ post.ticket.description }}</p>
+                                    {% if post.ticket.image %}
+                                    <p><img src="{{ post.ticket.image.url }}" alt="{{ post.ticket.image }}"></p>
+                                    {% endif %}
+                            </div>
+                        </div>
+                        <p class="button_right">
+                            <a href="{% url 'reviews:update-review' pk=post.id %}">
+                                <button type="submit" class="btn btn-submit">Modifier</button>
+                            </a>
+                            <a href="{% url 'reviews:delete-review' pk=post.id %}">
+                                <button type="submit" class="btn btn-delete">Supprimer</button>
+                            </a>
+                        </p>
+                    {% else %}
+                        <h2>Objet inconnu</h2>
+                    {% endif %}
         </section>
-        <section class="main-section">
-            <article class="shadow-box"><h3>{% lorem %}</h3></article>
-            <article class="shadow-box"><h3>{% lorem %}</h3></article>
-            <article class="shadow-box"><h3>{% lorem %}</h3></article>
-        </section>
+                {% empty %}
+                    <p><h2>Aucun ticket ni aucune critique à afficher.</h2></p>
+        {% endfor %}
         {% else %}
             <div class="login">
                 <div>
@@ -43,6 +89,7 @@
                     <h3></h3>
                     <form method="POST">
                         {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ next }}">
                         {% for field in form %}
                             {% if forloop.counter == 2 %}
                                 <p>{{ field.label_tag }} {{ field }}

@@ -32,27 +32,36 @@ def index_view(request):
         posts = sorted(chain(tickets, reviews),
                        key=attrgetter("time_created"),
                        reverse=True)
-        context = {"Test": "Ceci est un test",
-                   "posts": posts}
+        context = {"posts": posts}
         return render(request, "reviews/flux.html", context)
-    form = LoginForm
-    context = {"form": form}
+    elif request.method == "POST":
+            username = request.POST["username"]
+            password = request.POST["password"]
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("accounts:index")
+    else:
+        form = LoginForm
+        context = {"form": form}
+    return render(request, "accounts/index.html", context)
+
+
+def login_view(request):
+    next_url = request.GET.get("next")
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect("accounts:index")
-    return render(request, "accounts/index.html", context)
-
-
-def login_view(request):
-    index_view(request)
-    form = LoginForm
-    context = {"form": form,
-               "message": "Merci de vous identifier ci-dessous :"}
-    return render(request, "accounts/index.html", context)
+            return redirect(next_url)
+    else:
+        form = LoginForm
+        context = {"next": next_url,
+                   "form": form,
+                   "message": "Merci de vous identifier ci-dessous :"}
+        return render(request, "accounts/index.html", context)
 
 
 class SignupView(CreateView):
