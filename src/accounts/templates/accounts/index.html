@@ -89,7 +89,7 @@
                     <h3></h3>
                     <form method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ next }}">
+<!--                        <input type="hidden" name="next" value="{{ next }}">-->
                         {% for field in form %}
                             {% if forloop.counter == 2 %}
                                 <p>{{ field.label_tag }} {{ field }}

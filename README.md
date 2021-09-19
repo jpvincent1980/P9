@@ -10,7 +10,7 @@
 
 Créer une application web avec Django.
 
-Les langages utilisés sont Python, HTML, CSS (SaSS) et JavaScript.
+Les langages utilisés sont Python, HTML, CSS et JavaScript.
 
 ## Pré-requis
 
@@ -18,9 +18,23 @@ Depuis un terminal de type GitBash, déplacez-vous dans le répertoire dans lequ
 
 ``git clone https://github.com/jpvincent1980/P9``
 
+Créez vous un environnement virtuel intitulé ``env`` en tapant la commande suivante:
+
+``python -m venv env``
+
+puis installez-y toutes les bibliothèques nécessaires au bon fonctionnement du projet en saisissant la commande:
+
+``pip install -r requirements.txt``
+
 ## Démarrage
 
-...
+Toujours dans le même terminal et au niveau du répertoire contenant le fichier ``manage.py`` du projet, tapez la commande ci-dessous:
+
+``python manage.py runserver``
+
+puis rendez-vous à l'adresse ci-dessous dans votre navigateur :
+
+``http://127.0.0.1:8000/`` ou ``http://localhost:8000``
 
 ## IDE utilisé
 
