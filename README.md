@@ -6,9 +6,12 @@
 
 ![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)
 
+
+![Screenshot](Screenshot.jpg)
+
 # Projet P9
 
-Créer une application web avec Django.
+Créer une application web avec Django pour aider une association littéraire à gérer les interactions entre membres.
 
 Les langages utilisés sont Python, HTML, CSS et JavaScript.
 
