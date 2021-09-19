@@ -86,6 +86,13 @@ a:visited {
     color: black;
 }
 
+b {
+    color: #fff;
+    background: var(--btn-delete-bg-color);
+    padding: .5rem;
+    border-radius: 10px;
+}
+
 .login {
     width: 100%;
     display: flex;

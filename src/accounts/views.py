@@ -2,15 +2,15 @@ from itertools import chain
 from operator import attrgetter
 
 from django.contrib.auth import authenticate, login, logout
-from django.db.models import Count, Value, CharField
-from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import CreateView
 
 from accounts.forms import SignupForm, LoginForm
 from accounts.models import CustomUser, UserFollows
-from reviews.models import Ticket, Review
 from reviews.views import get_followed_users_open_tickets, \
     get_followed_users_tickets_answered_by_others, \
     get_own_reviews_from_others_tickets, get_reviews_from_followed_users
@@ -47,6 +47,14 @@ def index_view(request):
     return render(request, "accounts/index.html", context)
 
 
+def login_view(request):
+    index_view(request)
+    form = LoginForm
+    context = {"form": form,
+               "message": "Merci de vous identifier ci-dessous :"}
+    return render(request, "accounts/index.html", context)
+
+
 class SignupView(CreateView):
     form_class = SignupForm
     template_name = "accounts/signup.html"
@@ -63,6 +71,7 @@ class SignupView(CreateView):
         return HttpResponseRedirect(reverse('accounts:index'))
 
 
+@login_required
 def account_created_view(request):
     context = {}
     if request.method == "POST":
@@ -79,6 +88,7 @@ def logout_view(request):
     return redirect("accounts:index")
 
 
+@login_required
 def subscriptions_view(request):
     current_user_id = request.user.id
     followers = UserFollows.objects.filter(followed_user_id=current_user_id).values()
@@ -121,12 +131,14 @@ def subscriptions_view(request):
     return render(request, "accounts/subscriptions.html", context)
 
 
+@login_required
 def subscribe_view(request, user_id):
     subscription = UserFollows.objects.create(followed_user_id=user_id, user_id=request.user.id)
     subscription.save()
     return redirect("accounts:subscriptions")
 
 
+@login_required
 def unsubscribe_view(request, user_id):
     subscription = UserFollows.objects.filter(followed_user_id=user_id, user_id=request.user.id)
     subscription.delete()

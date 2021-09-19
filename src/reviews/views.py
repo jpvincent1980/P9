@@ -1,6 +1,8 @@
 from itertools import chain
 from operator import attrgetter
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Value, CharField, QuerySet
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
@@ -12,10 +14,7 @@ from reviews.models import Ticket, Review
 
 
 # Create your views here.
-class ReviewDetailView(DetailView):
-    pass
-
-
+@login_required
 def create_review_view(request, ticket_id=None):
     review_form = ReviewForm()
     if ticket_id and request.method != "POST":
@@ -41,7 +40,8 @@ def create_review_view(request, ticket_id=None):
     return render(request, "reviews/review.html", context)
 
 
-class UpdateReviewView(UpdateView):
+class UpdateReviewView(LoginRequiredMixin, UpdateView):
+    login_url = "accounts:index"
     model = Review
     form_class = UpdateReviewForm
     template_name = "reviews/review.html"
@@ -58,17 +58,14 @@ class UpdateReviewView(UpdateView):
         return redirect("reviews:posts")
 
 
+@login_required
 def delete_review_view(request, review_id):
     review = Review.objects.get(id=review_id)
     review.delete()
     return posts_view(request)
 
 
-class TicketDetailView(DetailView):
-    template_name = "reviews/posts.html"
-
-
-class CreateTicketView(CreateView):
+class CreateTicketView(LoginRequiredMixin, CreateView):
     form_class = TicketForm
     template_name = "reviews/ticket.html"
 
@@ -84,7 +81,7 @@ class CreateTicketView(CreateView):
         return redirect("reviews:posts")
 
 
-class UpdateTicketView(UpdateView):
+class UpdateTicketView(LoginRequiredMixin, UpdateView):
     model = Ticket
     form_class = UpdateTicketForm
     template_name = "reviews/ticket.html"
@@ -101,12 +98,14 @@ class UpdateTicketView(UpdateView):
         return redirect("reviews:posts")
 
 
+@login_required
 def delete_ticket_view(request, pk):
     ticket = Ticket.objects.get(id=pk)
     ticket.delete()
     return redirect("reviews:posts")
 
 
+@login_required
 def posts_view(request):
     tickets = Ticket.objects.filter(user=request.user.id)
     tickets = tickets.annotate(content_type=Value("Ticket", CharField()))

@@ -37,6 +37,10 @@
                 </div>
                 <div class="signup">
                     <h2>Connectez-vous</h2>
+                    {% if message %}
+                    <p><b>{{ message }}</b></p>
+                    {% endif %}
+                    <h3></h3>
                     <form method="POST">
                         {% csrf_token %}
                         {% for field in form %}

@@ -1,12 +1,14 @@
 from django.urls import path
 from accounts.views import SignupView, index_view, logout_view, \
-    account_created_view, subscriptions_view, unsubscribe_view, subscribe_view
+    account_created_view, subscriptions_view, unsubscribe_view, subscribe_view, \
+    login_view
 
 # Création d'un espace de noms
 app_name = 'accounts'
 
 urlpatterns = [
     path('', index_view, name="index"),
+    path('login/', login_view, name="login"),
     path('signup/', SignupView.as_view(), name="signup"),
     path('account-created/', account_created_view, name="account-created"),
     path('logout/', logout_view, name="logout"),
