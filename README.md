@@ -6,8 +6,6 @@
 ![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)
 ![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)
 
-![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)
-
 
 ![alt text](https://github.com/jpvincent1980/P9/blob/main/Screenshot.JPG)
 
@@ -48,3 +46,5 @@ puis rendez-vous à l'adresse ci-dessous dans votre navigateur :
 ## Auteur
 
 [Jean-Philippe Vincent](https://twitter.com/JeanPhilippeV15)
+
+![forthebadge](https://forthebadge.com/images/badges/powered-by-coffee.svg)
