@@ -7,7 +7,7 @@
 ![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)
 
 
-![alt text](https://github.com/jpvincent1980/P9/blob/main/Screenshot.JPG)
+![alt text](https://github.com/jpvincent1980/P9/blob/main/Screenshot.png)
 
 # Projet P9
 
