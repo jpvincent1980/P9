@@ -1,3 +1,5 @@
+![forthebadge](https://www.djangoproject.com/m/img/badges/djangopowered126x54.gif)
+
 ![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)
 
 ![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)
