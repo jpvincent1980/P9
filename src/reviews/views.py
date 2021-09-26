@@ -3,9 +3,9 @@ from operator import attrgetter
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Value, CharField, QuerySet
+from django.db.models import Value, CharField
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import CreateView, UpdateView
 
 from accounts.models import CustomUser, UserFollows
 from reviews.forms import ReviewForm, TicketForm, UpdateTicketForm, \
@@ -16,6 +16,18 @@ from reviews.models import Ticket, Review
 # Create your views here.
 @login_required
 def create_review_view(request, ticket_id=None):
+    """
+    A function-based view to create a new review in response to a ticket.
+
+    Context:
+        ticket_form: An instance of :form:"review.TicketForm"
+        ticket_id: Ticket id number if the review is in response of a ticket
+        post: An instance of :model:"reviews.Ticket"
+        review_form: An instance of :form:"reviews.ReviewForm"
+
+    Template:
+        :template:"reviews/review.html"
+    """
     review_form = ReviewForm()
     if ticket_id and request.method != "POST":
         ticket = Ticket.objects.get(pk=ticket_id)
@@ -41,6 +53,15 @@ def create_review_view(request, ticket_id=None):
 
 
 class UpdateReviewView(LoginRequiredMixin, UpdateView):
+    """
+    A class-based view to update an instance of Review model
+
+    Context:
+        :form:"reviews.UpdateReviewForm"
+
+    Template:
+        :template:"reviews/review.html"
+    """
     login_url = "accounts:index"
     model = Review
     form_class = UpdateReviewForm
@@ -60,12 +81,30 @@ class UpdateReviewView(LoginRequiredMixin, UpdateView):
 
 @login_required
 def delete_review_view(request, review_id):
+    """
+    A function-based view to delete an instance of Review model
+
+    Context:
+        None
+
+    Template:
+        None
+    """
     review = Review.objects.get(id=review_id)
     review.delete()
     return posts_view(request)
 
 
 class CreateTicketView(LoginRequiredMixin, CreateView):
+    """
+    A class-based view to create an instance of Ticket model
+
+    Context:
+        :form:"reviews.TicketForm"
+
+    Template:
+        :template:"reviews/ticket.html"
+    """
     form_class = TicketForm
     template_name = "reviews/ticket.html"
 
@@ -82,6 +121,15 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
 
 
 class UpdateTicketView(LoginRequiredMixin, UpdateView):
+    """
+    A class-based view to update an instance of Ticket model
+
+    Context:
+        :form:"reviews.UpdateTicketForm"
+
+    Template:
+        :template:"reviews/ticket.html"
+    """
     model = Ticket
     form_class = UpdateTicketForm
     template_name = "reviews/ticket.html"
@@ -100,6 +148,15 @@ class UpdateTicketView(LoginRequiredMixin, UpdateView):
 
 @login_required
 def delete_ticket_view(request, pk):
+    """
+    A function-based view to delete an instance of Ticket model
+
+    Context:
+        None
+
+    Template:
+        None
+    """
     ticket = Ticket.objects.get(id=pk)
     ticket.delete()
     return redirect("reviews:posts")
@@ -107,6 +164,17 @@ def delete_ticket_view(request, pk):
 
 @login_required
 def posts_view(request):
+    """
+    A function-based view to display instances of Tickets and Reviews created
+     by user
+
+    Context:
+        posts: :model:"reviews.Ticket"
+               :model:"reviews.Review"
+
+    Template:
+        :template:"reviews/posts.html"
+    """
     tickets = Ticket.objects.filter(user=request.user.id)
     tickets = tickets.annotate(content_type=Value("Ticket", CharField()))
     reviews = Review.objects.filter(user=request.user.id)
@@ -119,6 +187,15 @@ def posts_view(request):
 
 
 def get_open_tickets(user_id):
+    """
+    A function that returns a QuerySet made of user's open tickets.
+
+    Args:
+        user_id: user id number
+
+    Returns:
+        A QuerySet of user's open tickets
+    """
     user_tickets = Ticket.objects.filter(user=user_id)
     reviews = Review.objects.values()
     answered_tickets_ids = [element.get("ticket_id") for element in reviews]
@@ -127,16 +204,16 @@ def get_open_tickets(user_id):
     return user_open_tickets
 
 
-def get_own_tickets_answered_by_self(user_id):
-    user_tickets = Ticket.objects.filter(user=user_id)
-    reviews = Review.objects.values()
-    answered_by_self = [element.get("ticket_id") for element in reviews if element["user_id"] == user_id]
-    user_tickets_closed_by_self = user_tickets.filter(id__in=answered_by_self)
-    user_tickets_closed_by_self = user_tickets_closed_by_self.annotate(content_type=Value("Closed-tickets", CharField()))
-    return user_tickets_closed_by_self
-
-
 def get_followed_users_open_tickets(user_id):
+    """
+    A function that returns a QuerySet made of followed user's open tickets.
+
+    Args:
+        user_id: user id number
+
+    Returns:
+        A QuerySet of followed user's open tickets
+    """
     followed_users = UserFollows.objects.filter(user_id=user_id)
     followed_users = followed_users.values()
     followed_users_ids = [user["followed_user_id"] for user in followed_users]
@@ -149,6 +226,16 @@ def get_followed_users_open_tickets(user_id):
 
 
 def get_followed_users_tickets_answered_by_others(user_id):
+    """
+    A function that returns a QuerySet made of followed user's tickets answered
+    by other users.
+
+    Args:
+        user_id: user id number
+
+    Returns:
+        A QuerySet of followed user's tickets answered by other users
+    """
     followed_users = UserFollows.objects.filter(user_id=user_id).values()
     followed_users_ids = [user["followed_user_id"] for user in followed_users]
     followed_users_tickets = Ticket.objects.none()
@@ -166,6 +253,16 @@ def get_followed_users_tickets_answered_by_others(user_id):
 
 
 def get_own_reviews_from_others_tickets(user_id):
+    """
+    A function that returns a QuerySet made of user's reviews answering to
+    other users' tickets
+
+    Args:
+        user_id: user id number
+
+    Returns:
+        A QuerySet of user's reviews answering to other users' tickets
+    """
     others_tickets = Ticket.objects.exclude(user_id=user_id).values()
     others_tickets_ids = [ticket["id"] for ticket in others_tickets]
     reviews = Review.objects.filter(user_id=user_id).filter(ticket_id__in=others_tickets_ids)
@@ -173,15 +270,16 @@ def get_own_reviews_from_others_tickets(user_id):
     return reviews
 
 
-def get_own_reviews_from_own_tickets(user_id):
-    others_tickets = Ticket.objects.exclude(user_id=user_id).values()
-    others_tickets_ids = [ticket["id"] for ticket in others_tickets]
-    reviews = Review.objects.filter(user_id=user_id).exclude(ticket_id__in=others_tickets_ids)
-    reviews = reviews.annotate(content_type=Value("Review", CharField()))
-    return reviews
-
-
 def get_reviews_from_followed_users(user_id):
+    """
+    A function that returns a QuerySet made of followed user's reviews.
+
+    Args:
+        user_id: user id number
+
+    Returns:
+        A QuerySet of followed user's reviews
+    """
     followed_users = UserFollows.objects.filter(user_id=user_id).values()
     followed_users_ids = [user["followed_user_id"] for user in followed_users]
     followed_users_reviews = Review.objects.none()

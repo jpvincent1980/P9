@@ -1,5 +1,5 @@
 from django.forms import ModelForm, ChoiceField, RadioSelect
-from django.forms.widgets import ClearableFileInput, FileInput
+from django.forms.widgets import FileInput
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -7,12 +7,17 @@ from django.utils.translation import gettext_lazy as _, ugettext_lazy
 
 from reviews.models import Review, Ticket
 
-# In reverse order on purpose so that star rating system is working
+# In reverse order on purpose so that star rating system works
 CHOICES = [(5, ""), (4, ""), (3, ""), (2, ""), (1, "")]
 
 
 class ReviewForm(ModelForm):
-    rating = ChoiceField(label="Votre note", choices=CHOICES, widget=RadioSelect)
+    """
+    A form inheriting from ModelForm to create a Review instance.
+    """
+    rating = ChoiceField(label="Votre note",
+                         choices=CHOICES,
+                         widget=RadioSelect)
 
     class Meta:
         model = Review
@@ -22,7 +27,11 @@ class ReviewForm(ModelForm):
 
 
 class UpdateReviewForm(ModelForm):
-    rating = ChoiceField(label="Votre note", choices=CHOICES,
+    """
+    A form inheriting from ModelForm to update a Review instance.
+    """
+    rating = ChoiceField(label="Votre note",
+                         choices=CHOICES,
                          widget=RadioSelect)
 
     class Meta:
@@ -33,6 +42,9 @@ class UpdateReviewForm(ModelForm):
 
 
 class TicketForm(ModelForm):
+    """
+    A form inheriting from ModelForm to create a Ticket instance.
+    """
     class Meta:
         model = Ticket
         exclude = ["user"]
@@ -40,6 +52,9 @@ class TicketForm(ModelForm):
 
 
 class CustomImageFieldWidget(FileInput):
+    """
+    A class inheriting from FileInput to customize html output of ImageField
+    """
     initial_text = ugettext_lazy('Image actuelle')
     input_text = ugettext_lazy('Nouvelle image')
     template_with_initial = '<p>%(initial_text)s: </p><p>%(initial)s </p>' \
@@ -63,6 +78,9 @@ class CustomImageFieldWidget(FileInput):
 
 
 class UpdateTicketForm(ModelForm):
+    """
+    A form inheriting from ModelForm to update a Ticket instance.
+    """
     class Meta:
         model = Ticket
         exclude = ["user"]

@@ -3,6 +3,9 @@ from accounts.models import CustomUser
 
 
 class SignupForm(UserCreationForm):
+    """
+    A form inheriting from UserCreationForm to create a CustomUser instance.
+    """
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields["username"].help_text = None
@@ -19,4 +22,7 @@ class SignupForm(UserCreationForm):
 
 
 class LoginForm(AuthenticationForm):
+    """
+    A form inheriting from AuthenticationForm for users to login.
+    """
     pass

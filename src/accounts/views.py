@@ -18,6 +18,17 @@ from reviews.views import get_followed_users_open_tickets, \
 
 # Create your views here.
 def index_view(request):
+    """
+    A function-based view to display index page
+
+    Context:
+        posts: :model:"reviews.Ticket"
+               :model:"reviews.Review"
+        form:  :form:"accounts.LoginForm"
+
+    Template:
+        :template:"accounts/index.html"
+    """
     if request.user.is_authenticated:
         # Tickets ouverts des utilisateurs suivis
         open_tickets = get_followed_users_open_tickets(request.user.id)
@@ -48,6 +59,17 @@ def index_view(request):
 
 
 def login_view(request):
+    """
+    A function-based view to display index page
+
+    Context:
+        next: next url to redirect user once logged in
+        form:  :form:"accounts.LoginForm"
+        message: A string displayed to ask user to login
+
+    Template:
+        :template:"accounts/index.html"
+    """
     next_url = request.GET.get("next")
     if request.method == "POST":
         username = request.POST["username"]
@@ -65,6 +87,15 @@ def login_view(request):
 
 
 class SignupView(CreateView):
+    """
+    A class-based view for a visitor to signup
+
+    Context:
+        form:  :form:"accounts.SignupForm"
+
+    Template:
+        :template:"accounts/signup.html"
+    """
     form_class = SignupForm
     template_name = "accounts/signup.html"
     success_url = "../account-created/"
@@ -82,6 +113,16 @@ class SignupView(CreateView):
 
 @login_required
 def account_created_view(request):
+    """
+    A function-based view to display a confirmation message once user accpount
+    has been created
+
+    Context:
+        None
+
+    Template:
+        :template:"accounts/account-created.html"
+    """
     context = {}
     if request.method == "POST":
         username = request.POST["username"]
@@ -93,12 +134,37 @@ def account_created_view(request):
 
 
 def logout_view(request):
+    """
+    A function-based view to logout user
+
+    Context:
+        None
+
+    Template:
+        None
+    """
     logout(request)
     return redirect("accounts:index")
 
 
 @login_required
 def subscriptions_view(request):
+    """
+    A function-based view to display followed users and other users that follow
+    user
+
+    Context:
+        "nb_of_followers": an integrer representing the number of followers
+        "nb_of_subscriptions": an integrer representing the number of followed
+        users
+        "followers": a QuerySet of CustomUser instances
+        "followed_users": a QuerySet of CustomUser instances
+        "result": a QuerySet of CustomUser instances
+        "result_type": "QuerySet" or "str" to manage results search
+
+    Template:
+        :template:"accounts/subscriptions.html"
+    """
     current_user_id = request.user.id
     followers = UserFollows.objects.filter(followed_user_id=current_user_id).values()
     nb_of_followers = followers.aggregate(total_followers=Count("user_id"))
@@ -142,6 +208,15 @@ def subscriptions_view(request):
 
 @login_required
 def subscribe_view(request, user_id):
+    """
+    A function-based view to subscribe to another user
+
+    Context:
+        None
+
+    Template:
+        None
+    """
     subscription = UserFollows.objects.create(followed_user_id=user_id, user_id=request.user.id)
     subscription.save()
     return redirect("accounts:subscriptions")
@@ -149,6 +224,15 @@ def subscribe_view(request, user_id):
 
 @login_required
 def unsubscribe_view(request, user_id):
+    """
+    A function-based view to unsubscribe from another user
+
+    Context:
+        None
+
+    Template:
+        None
+    """
     subscription = UserFollows.objects.filter(followed_user_id=user_id, user_id=request.user.id)
     subscription.delete()
     return subscriptions_view(request)

@@ -7,10 +7,16 @@ from django.db import models
 
 
 class CustomUser(AbstractUser):
+    """
+    A model that represents a user
+    """
     pass
 
 
 class UserFollows(models.Model):
+    """
+    A model that represents a user and the other user he/she follows
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
                              related_name='following')
