@@ -80,7 +80,7 @@ class UpdateReviewView(LoginRequiredMixin, UpdateView):
 
 
 @login_required
-def delete_review_view(request, review_id):
+def delete_review_view(request, pk):
     """
     A function-based view to delete an instance of Review model
 
@@ -90,7 +90,7 @@ def delete_review_view(request, review_id):
     Template:
         None
     """
-    review = Review.objects.get(id=review_id)
+    review = Review.objects.get(id=pk)
     review.delete()
     return posts_view(request)
 
