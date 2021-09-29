@@ -29,6 +29,12 @@ puis installez-y toutes les bibliothèques nécessaires au bon fonctionnement du
 
 ``pip install -r requirements.txt``
 
+Activez votre environnement virtuel en saisissant la commande suivante:
+
+sous Windows -> ``env/Scripts/activate.bat``
+
+sous Mac/Linux -> ``source/env/bin/activate``
+
 ## Démarrage
 
 Toujours dans le même terminal et au niveau du répertoire contenant le fichier ``manage.py`` du projet, tapez la commande ci-dessous:
