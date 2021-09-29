@@ -35,6 +35,14 @@ def create_review_view(request, ticket_id=None):
                    "post": ticket,
                    "ticket_id": ticket_id}
         return render(request, "reviews/review.html", context)
+    if ticket_id and request.method == "POST":
+        ticket = Ticket.objects.get(pk=ticket_id)
+        review = Review.objects.create(headline=request.POST.get("headline"),
+                                       rating=request.POST.get("rating"),
+                                       body=request.POST.get("body"),
+                                       user=request.user,
+                                       ticket=ticket)
+        return redirect("reviews:posts")
     if request.method == "POST":
         ticket = Ticket.objects.create(title=request.POST.get("title"),
                                        description=request.POST.get("description"),
