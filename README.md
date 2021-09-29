@@ -39,6 +39,14 @@ puis rendez-vous à l'adresse ci-dessous dans votre navigateur :
 
 ``http://127.0.0.1:8000/`` ou ``http://localhost:8000``
 
+Vous trouverez ci-dessous quelques comptes utilisateurs disponibles pour tester l'application Web :
+
+Login -> ``User01`` / Mot de Passe -> ``azerty01``
+
+Login -> ``User02`` / Mot de Passe -> ``azerty02``
+
+Login -> ``User03`` / Mot de Passe -> ``azerty03``
+
 ## IDE utilisé
 
 [PyCharm Community Edition](https://www.jetbrains.com/fr-fr/pycharm/)
