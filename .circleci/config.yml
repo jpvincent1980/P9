@@ -21,6 +21,8 @@ jobs:
 
   test:
     executor: python/default
+    environment:
+      DJANGO_SETTINGS_MODULE: LITReview.settings
     steps:
       - checkout
       - python/load-cache
