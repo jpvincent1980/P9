@@ -1,0 +1,75 @@
+version: 2.1
+
+description: Workflow de build, test, linting, conteneurisation et déploiement.
+
+display:
+  source_url: https://github.com/jpvincent1980/P9
+
+orbs:
+  python: circleci/python@0.3.2
+  docker: circleci/docker@2.0.1
+  heroku: circleci/heroku@1.2.6
+
+jobs:
+  build:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+
+  test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - run:
+          command: pytest
+
+  lint:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
+      - run:
+          command: flake8
+
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      # Install Heroku if not already installed
+      - heroku/install
+      # Deploy app to Heroku
+      - heroku/deploy-via-git:
+          app-name: $HEROKU_APP_NAME
+          api-key: HEROKU_API_KEY
+
+workflows:
+  main:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - lint:
+          requires:
+            - build
+      - docker/publish:
+          name: containerize
+          image: jpvincent1980/p9
+          tag: $CIRCLE_SHA1
+          requires:
+            - build
+            - test
+            - lint
+          filters:
+            branches:
+              only: main
+      - deploy:
+          requires:
+            - containerize
+          filters:
+            branches:
+              only: main
