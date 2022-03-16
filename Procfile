@@ -1,1 +1,0 @@
-web: gunicorn src.LITReview.wsgi --log-file -
