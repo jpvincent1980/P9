@@ -24,8 +24,9 @@ jobs:
     steps:
       - checkout
       - python/load-cache
-      DJANGO_SETTINGS_MODULE: LITReview.settings
       - run:
+          environment:
+            DJANGO_SETTINGS_MODULE: LITReview.settings
           command: pytest
 
   lint:
