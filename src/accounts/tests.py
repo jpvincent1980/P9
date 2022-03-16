@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.urls import reverse
 
 
 # Create your tests here.
@@ -11,5 +10,4 @@ class AccountsTest(TestCase):
         """
         Tests that the view returns a 200 status code.
         """
-        # response = self.client.get(reverse('accounts'))
         self.assertEqual(200, 200)
