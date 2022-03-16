@@ -27,7 +27,7 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-          command: pytest  --ds=LITReview.settings
+          command: pytest  --ds LITReview.settings
 
   lint:
     executor: python/default
