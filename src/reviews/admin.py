@@ -10,7 +10,7 @@ class TicketAdmin(admin.ModelAdmin):
     readonly_fields = ["aperçu_image"]
 
     def aperçu_image(self, obj):
-        return mark_safe("<img src='{url}' />".format(url = obj.image.url))
+        return mark_safe("<img src='{url}' />".format(url=obj.image.url))
 
 
 @admin.register(Review)

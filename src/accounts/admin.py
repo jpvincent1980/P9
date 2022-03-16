@@ -21,4 +21,3 @@ class UserFollowsAdmin(admin.ModelAdmin):
     Admin interface.
     """
     pass
-

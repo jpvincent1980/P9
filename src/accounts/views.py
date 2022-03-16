@@ -46,17 +46,17 @@ def index_view(request):
         context = {"posts": posts}
         return render(request, "reviews/flux.html", context)
     elif request.method == "POST":
-            username = request.POST["username"]
-            password = request.POST["password"]
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("accounts:index")
-            else:
-                form = LoginForm
-                message = "Nom d'utilisateur / mot de passe non valides."
-                context = {"form": form,
-                           "message": message}
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("accounts:index")
+        else:
+            form = LoginForm
+            message = "Nom d'utilisateur / mot de passe non valides."
+            context = {"form": form,
+                       "message": message}
     else:
         form = LoginForm
         context = {"form": form}
@@ -204,7 +204,8 @@ def subscriptions_view(request):
                 message = "Aucun utilisateur auquel vous n'êtes pas déjà " \
                           "abonné n'a été trouvé."
                 context = {"nb_of_followers": nb_of_followers,
-                           "nb_of_subscriptions": nb_of_subscriptions,"followers": followers,
+                           "nb_of_subscriptions": nb_of_subscriptions,
+                           "followers": followers,
                            "followed_users": followed_users,
                            "result": [message],
                            "result_type": "str"}

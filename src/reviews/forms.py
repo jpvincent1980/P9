@@ -21,7 +21,7 @@ class ReviewForm(ModelForm):
 
     class Meta:
         model = Review
-        fields = ["headline","rating","body"]
+        fields = ["headline", "rating", "body"]
         labels = {"headline": _("Titre"),
                   "body": _("Votre critique")}
 
@@ -63,7 +63,7 @@ class CustomImageFieldWidget(FileInput):
 
     def render(self, name, value, attrs=None, renderer=None):
         substitutions = {'initial_text': self.initial_text,
-                         'input_text': self.input_text,}
+                         'input_text': self.input_text}
         template = '%(input)s'
         substitutions['input'] = super(CustomImageFieldWidget, self).render(
             name, value, attrs)

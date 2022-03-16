@@ -22,5 +22,4 @@ urlpatterns = [
          name="update-ticket"),
     path('tickets/delete-ticket/<int:pk>', delete_ticket_view,
          name="delete-ticket"),
-    path('posts/', posts_view, name="posts")
-    ]
+    path('posts/', posts_view, name="posts")]

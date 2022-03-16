@@ -54,14 +54,14 @@ class Ticket(models.Model):
         Returns: Nothing
 
         """
-        super(Ticket,self).save(force_insert=False,
-                                force_update=False,
-                                using=None,
-                                update_fields=None)
+        super(Ticket, self).save(force_insert=False,
+                                 force_update=False,
+                                 using=None,
+                                 update_fields=None)
         if self.image:
             updated_image = Image.open(self.image)
             if updated_image.width > 400 or updated_image.height > 250:
-                output_size = (400,250)
+                output_size = (400, 250)
                 updated_image.thumbnail(output_size)
                 updated_image.save(self.image.path)
 
