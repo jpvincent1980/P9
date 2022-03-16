@@ -62,7 +62,9 @@ ROOT_URLCONF = 'LITReview.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "accounts", BASE_DIR / "reviews", BASE_DIR / "templates"],
+        'DIRS': [os.path.join(BASE_DIR, "accounts"),
+                 os.path.join(BASE_DIR, "reviews"),
+                 os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,7 +86,7 @@ WSGI_APPLICATION = 'LITReview.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -131,7 +133,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'mediafiles'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 LOGIN_URL = "accounts:login"
