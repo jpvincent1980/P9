@@ -52,6 +52,11 @@ def index_view(request):
             if user is not None:
                 login(request, user)
                 return redirect("accounts:index")
+            else:
+                form = LoginForm
+                message = "Nom d'utilisateur / mot de passe non valides."
+                context = {"form": form,
+                           "message": message}
     else:
         form = LoginForm
         context = {"form": form}

@@ -95,6 +95,7 @@
                                 <p>{{ field.label_tag }} {{ field }}
                                 <span class="show-password" onclick="ShowPassword('id_password')">👁</span>
                                 </p>
+                        {{ field.errors }}
                             {% else %}
                                 <p>{{ field.label_tag }} {{ field }}
                             {% endif %}
