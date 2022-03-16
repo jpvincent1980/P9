@@ -1,1 +1,1 @@
-web: gunicorn LITReview.wsgi --log-file -
+web: gunicorn src.LITReview.wsgi --log-file -
