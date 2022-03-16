@@ -1,4 +1,6 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, forms
+from django.core.exceptions import ValidationError
+
 from accounts.models import CustomUser
 
 
@@ -7,7 +9,8 @@ class SignupForm(UserCreationForm):
     A form inheriting from UserCreationForm to create a CustomUser instance.
     """
     def __init__(self, *args, **kwargs):
-        super(SignupForm, self).__init__(*args, **kwargs)
+        # super(SignupForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["username"].help_text = None
         self.fields["password1"].help_text = "<ul>" \
                                              "<li>Votre mot de passe doit " \
@@ -21,6 +24,7 @@ class SignupForm(UserCreationForm):
         model = CustomUser
         fields = ["username", "password1", "password2"]
         widgets = {"username": forms.fields.TextInput(attrs={"placeholder": "Pseudo"})}
+        error_messages = {"pseudo": "Ce pseudo est déjà utilisé"}
 
 
 class LoginForm(AuthenticationForm):

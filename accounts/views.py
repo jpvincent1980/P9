@@ -119,7 +119,7 @@ class SignupView(CreateView):
 @login_required
 def account_created_view(request):
     """
-    A function-based view to display a confirmation message once user accpount
+    A function-based view to display a confirmation message once user account
     has been created
 
     Context:

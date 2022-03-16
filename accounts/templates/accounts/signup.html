@@ -28,6 +28,17 @@
                     <p>{{ field.label_tag }} {{ field }}
                 {% endif %}
             {% endfor %}
+
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                      <div class="errors">
+                           <p>{{ error|escape }}</p>
+                      </div>
+                   {% endfor %}
+               {% endfor %}
+            {% endif %}
+
             <p>
                 <a href="{% url 'accounts:index' %}"><buttom class="btn btn-submit">Revenir à l'accueil</buttom></a>
                 <input type="submit" value="S'inscrire" class="btn btn-submit">
