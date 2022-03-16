@@ -21,13 +21,13 @@ jobs:
 
   test:
     executor: python/default
-#    environment:
-#      DJANGO_SETTINGS_MODULE: LITReview.settings
     steps:
       - checkout
       - python/load-cache
+      - environment:
+          DJANGO_SETTINGS_MODULE: LITReview.settings
       - run:
-          command: pytest --ds=LITReview.settings
+          command: pytest
 
   lint:
     executor: python/default
