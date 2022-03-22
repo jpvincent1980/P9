@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+
 import environ
+import cloudinary
+import cloudinary_storage
 
 # Initialize environment variables
 env = environ.Env()
@@ -42,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'reviews',
+    'cloudinary',
+    'cloudinary-storage',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +144,12 @@ LOGIN_URL = "accounts:login"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUD_NAME'),
+    'API_KEY': env('API_KEY'),
+    'API_SECRET': env('API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
