@@ -2,6 +2,7 @@ Livrables
 Documents
 env
 .idea
+mediafiles
 db.sqlite3
 *__pycache__*
 .gitignore
