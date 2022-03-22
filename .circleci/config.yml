@@ -25,7 +25,7 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-          command: pytest
+          command: python -m pytest
           environment:
             DJANGO_SETTINGS_MODULE: LITReview.settings
 
@@ -35,7 +35,7 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-          command: flake8
+          command: python -m flake8
 
   deploy:
     executor: heroku/default
