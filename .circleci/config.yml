@@ -65,7 +65,7 @@ workflows:
           requires:
             - build
 #            - test
-            - lint
+#            - lint
           filters:
             branches:
               only: main
