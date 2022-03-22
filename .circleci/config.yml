@@ -64,7 +64,7 @@ workflows:
           tag: $CIRCLE_SHA1
           requires:
             - build
-            - test
+#            - test
             - lint
           filters:
             branches:
