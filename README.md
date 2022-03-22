@@ -13,7 +13,7 @@ Une version de l'application est déployée sur Heroku.
 
 Vous pouvez y accéder en cliquant sur le logo ci-dessous:
 
-<a href="https://litreview-jpvincent-herokuapp.com"><img src="https://github.com/jpvincent1980/jpvincent1980/blob/main/assets/img/logo-heroku.png" alt="Logo Twitter" /></a>
+<a href="https://litreview-jpvincent.herokuapp.com"><img src="https://github.com/jpvincent1980/jpvincent1980/blob/main/assets/img/logo-heroku.png" alt="Logo Twitter" /></a>
 
 Les fichiers statiques sont servis par Whitenoise et les fichiers media par Cloudinary.
 
