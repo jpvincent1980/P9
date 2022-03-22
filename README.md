@@ -9,6 +9,14 @@
 
 ![alt text](https://github.com/jpvincent1980/P9/blob/main/Screenshot.png)
 
+Une version de l'application est déployée sur Heroku. 
+
+Vous pouvez y accéder en cliquant sur le logo ci-dessous:
+
+<a href="https://litreview-jpvincent-herokuapp.com"><img src="https://github.com/jpvincent1980/jpvincent1980/blob/main/assets/img/logo-heroku.png" alt="Logo Twitter" /></a>
+
+Les fichiers statiques sont servis par Whitenoise et les fichiers media par Cloudinary.
+
 # Projet P9
 
 Créer une application web avec Django pour aider une association littéraire à gérer les interactions entre membres.
